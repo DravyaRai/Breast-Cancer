@@ -1,0 +1,2987 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)https://www.kaggle.com/sujvalrai/breast-cancer-detection/edit -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link href="./Breast Cancer Detection _ Kaggle_files/icon" rel="stylesheet"><style>@import url('https://fonts.googleapis.com/css?family=Inter:400,400i,500,500i,600,600i,700,700i');
+    @import url("https://use.typekit.net/tql2nih.css");
+
+    html,
+    body {
+      font-family: Inter, sans-serif;
+      height: 100%;
+      margin: 0;
+    }
+
+    .header {
+      padding: 0;
+    }
+
+    #root {
+      height: 100%;
+    }</style><meta name="description" content="The Kaggle Kernels IDE for Data Scientists."><script type="text/javascript" async="" src="./Breast Cancer Detection _ Kaggle_files/recaptcha__en.js.download" crossorigin="anonymous" integrity="sha384-o1nfdUm9cV7Sx6HxXDsnady1EGmCBTwza/JTA6OSowyOK+wq0YF0+F9jejHVacaR" nonce=""></script><script type="text/javascript" async="" src="./Breast Cancer Detection _ Kaggle_files/js" nonce=""></script><script type="text/javascript" async="" src="./Breast Cancer Detection _ Kaggle_files/analytics.js.download" nonce=""></script><script nonce="" defer="defer" src="./Breast Cancer Detection _ Kaggle_files/notebook-5fbcb3d28246a8b9e6a3.js.download"></script><link href="./Breast Cancer Detection _ Kaggle_files/notebook-ed6d5a101cc9ce1b34d2.css" rel="stylesheet">
+
+          <script nonce="">window.KAGGLE_JUPYTERLAB_PATH = "/static/dist/jupyterlab/jupyterlab-index-9d1d47a2914fd4fe3d4b.html";</script>
+          
+<title>Breast Cancer Detection | Kaggle</title>
+<meta property="description" content="The Kaggle Notebooks IDE for Data Scientists.">
+
+<style data-styled="active" data-styled-version="5.3.5"></style><style data-jss="" data-meta="MuiTouchRipple">
+.MuiTouchRipple-root {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  overflow: hidden;
+  position: absolute;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.MuiTouchRipple-ripple {
+  opacity: 0;
+  position: absolute;
+}
+.MuiTouchRipple-rippleVisible {
+  opacity: 0.3;
+  animation: MuiTouchRipple-keyframes-enter 550ms cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1);
+}
+.MuiTouchRipple-ripplePulsate {
+  animation-duration: 200ms;
+}
+.MuiTouchRipple-child {
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 1;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+.MuiTouchRipple-childLeaving {
+  opacity: 0;
+  animation: MuiTouchRipple-keyframes-exit 550ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.MuiTouchRipple-childPulsate {
+  top: 0;
+  left: 0;
+  position: absolute;
+  animation: MuiTouchRipple-keyframes-pulsate 2500ms cubic-bezier(0.4, 0, 0.2, 1) 200ms infinite;
+}
+@-webkit-keyframes MuiTouchRipple-keyframes-enter {
+  0% {
+    opacity: 0.1;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+}
+@-webkit-keyframes MuiTouchRipple-keyframes-exit {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes MuiTouchRipple-keyframes-pulsate {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.92);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+</style><style data-jss="" data-meta="MuiButtonBase">
+.MuiButtonBase-root {
+  color: inherit;
+  border: 0;
+  cursor: pointer;
+  margin: 0;
+  display: inline-flex;
+  outline: 0;
+  padding: 0;
+  position: relative;
+  align-items: center;
+  user-select: none;
+  border-radius: 0;
+  vertical-align: middle;
+  -moz-appearance: none;
+  justify-content: center;
+  text-decoration: none;
+  background-color: transparent;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.MuiButtonBase-root::-moz-focus-inner {
+  border-style: none;
+}
+.MuiButtonBase-root.Mui-disabled {
+  cursor: default;
+  pointer-events: none;
+}
+@media print {
+  .MuiButtonBase-root {
+    -webkit-print-color-adjust: exact;
+  }
+}
+</style><style data-jss="" data-meta="MuiPopover">
+.MuiPopover-paper {
+  outline: 0;
+  position: absolute;
+  max-width: calc(100% - 32px);
+  min-width: 16px;
+  max-height: calc(100% - 32px);
+  min-height: 16px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+</style><style data-jss="" data-meta="MuiMenu">
+.MuiMenu-paper {
+  max-height: calc(100% - 96px);
+  -webkit-overflow-scrolling: touch;
+}
+.MuiMenu-list {
+  outline: 0;
+}
+</style><style data-jss="" data-meta="MuiSvgIcon">
+.MuiSvgIcon-root {
+  fill: currentColor;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  font-size: 1.5rem;
+  transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  flex-shrink: 0;
+  user-select: none;
+}
+.MuiSvgIcon-colorPrimary {
+  color: #3f51b5;
+}
+.MuiSvgIcon-colorSecondary {
+  color: #f50057;
+}
+.MuiSvgIcon-colorAction {
+  color: rgba(0, 0, 0, 0.54);
+}
+.MuiSvgIcon-colorError {
+  color: #f44336;
+}
+.MuiSvgIcon-colorDisabled {
+  color: rgba(0, 0, 0, 0.26);
+}
+.MuiSvgIcon-fontSizeInherit {
+  font-size: inherit;
+}
+.MuiSvgIcon-fontSizeSmall {
+  font-size: 1.25rem;
+}
+.MuiSvgIcon-fontSizeLarge {
+  font-size: 2.1875rem;
+}
+</style><style data-jss="" data-meta="MuiInputBase">
+@-webkit-keyframes mui-auto-fill {}
+@-webkit-keyframes mui-auto-fill-cancel {}
+.MuiInputBase-root {
+  color: rgba(0, 0, 0, 0.87);
+  cursor: text;
+  display: inline-flex;
+  position: relative;
+  font-size: 1rem;
+  box-sizing: border-box;
+  align-items: center;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  line-height: 1.1876em;
+  letter-spacing: 0.00938em;
+}
+.MuiInputBase-root.Mui-disabled {
+  color: rgba(0, 0, 0, 0.38);
+  cursor: default;
+}
+.MuiInputBase-multiline {
+  padding: 6px 0 7px;
+}
+.MuiInputBase-multiline.MuiInputBase-marginDense {
+  padding-top: 3px;
+}
+.MuiInputBase-fullWidth {
+  width: 100%;
+}
+.MuiInputBase-input {
+  font: inherit;
+  color: currentColor;
+  width: 100%;
+  border: 0;
+  height: 1.1876em;
+  margin: 0;
+  display: block;
+  padding: 6px 0 7px;
+  min-width: 0;
+  background: none;
+  box-sizing: content-box;
+  animation-name: mui-auto-fill-cancel;
+  letter-spacing: inherit;
+  animation-duration: 10ms;
+  -webkit-tap-highlight-color: transparent;
+}
+.MuiInputBase-input::-webkit-input-placeholder {
+  color: currentColor;
+  opacity: 0.42;
+  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+.MuiInputBase-input::-moz-placeholder {
+  color: currentColor;
+  opacity: 0.42;
+  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+.MuiInputBase-input:-ms-input-placeholder {
+  color: currentColor;
+  opacity: 0.42;
+  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+.MuiInputBase-input::-ms-input-placeholder {
+  color: currentColor;
+  opacity: 0.42;
+  transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+.MuiInputBase-input:focus {
+  outline: 0;
+}
+.MuiInputBase-input:invalid {
+  box-shadow: none;
+}
+.MuiInputBase-input::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+.MuiInputBase-input.Mui-disabled {
+  opacity: 1;
+}
+.MuiInputBase-input:-webkit-autofill {
+  animation-name: mui-auto-fill;
+  animation-duration: 5000s;
+}
+label[data-shrink=false] + .MuiInputBase-formControl .MuiInputBase-input::-webkit-input-placeholder {
+  opacity: 0 !important;
+}
+label[data-shrink=false] + .MuiInputBase-formControl .MuiInputBase-input::-moz-placeholder {
+  opacity: 0 !important;
+}
+label[data-shrink=false] + .MuiInputBase-formControl .MuiInputBase-input:-ms-input-placeholder {
+  opacity: 0 !important;
+}
+label[data-shrink=false] + .MuiInputBase-formControl .MuiInputBase-input::-ms-input-placeholder {
+  opacity: 0 !important;
+}
+label[data-shrink=false] + .MuiInputBase-formControl .MuiInputBase-input:focus::-webkit-input-placeholder {
+  opacity: 0.42;
+}
+label[data-shrink=false] + .MuiInputBase-formControl .MuiInputBase-input:focus::-moz-placeholder {
+  opacity: 0.42;
+}
+label[data-shrink=false] + .MuiInputBase-formControl .MuiInputBase-input:focus:-ms-input-placeholder {
+  opacity: 0.42;
+}
+label[data-shrink=false] + .MuiInputBase-formControl .MuiInputBase-input:focus::-ms-input-placeholder {
+  opacity: 0.42;
+}
+.MuiInputBase-inputMarginDense {
+  padding-top: 3px;
+}
+.MuiInputBase-inputMultiline {
+  height: auto;
+  resize: none;
+  padding: 0;
+}
+.MuiInputBase-inputTypeSearch {
+  -moz-appearance: textfield;
+  -webkit-appearance: textfield;
+}
+</style><style data-jss="" data-meta="MuiInput">
+.MuiInput-root {
+  position: relative;
+}
+label + .MuiInput-formControl {
+  margin-top: 16px;
+}
+.MuiInput-colorSecondary.MuiInput-underline:after {
+  border-bottom-color: #f50057;
+}
+.MuiInput-underline:after {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: "";
+  position: absolute;
+  transform: scaleX(0);
+  transition: transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+  border-bottom: 2px solid #3f51b5;
+  pointer-events: none;
+}
+.MuiInput-underline.Mui-focused:after {
+  transform: scaleX(1);
+}
+.MuiInput-underline.Mui-error:after {
+  transform: scaleX(1);
+  border-bottom-color: #f44336;
+}
+.MuiInput-underline:before {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: "\00a0";
+  position: absolute;
+  transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+  pointer-events: none;
+}
+.MuiInput-underline:hover:not(.Mui-disabled):before {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.87);
+}
+.MuiInput-underline.Mui-disabled:before {
+  border-bottom-style: dotted;
+}
+@media (hover: none) {
+  .MuiInput-underline:hover:not(.Mui-disabled):before {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+  }
+}
+</style><style data-jss="" data-meta="MuiSelect">
+.MuiSelect-select {
+  cursor: pointer;
+  min-width: 16px;
+  user-select: none;
+  border-radius: 0;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+.MuiSelect-select:focus {
+  border-radius: 0;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.MuiSelect-select::-ms-expand {
+  display: none;
+}
+.MuiSelect-select.Mui-disabled {
+  cursor: default;
+}
+.MuiSelect-select[multiple] {
+  height: auto;
+}
+.MuiSelect-select:not([multiple]) option, .MuiSelect-select:not([multiple]) optgroup {
+  background-color: #fff;
+}
+.MuiSelect-select.MuiSelect-select {
+  padding-right: 24px;
+}
+.MuiSelect-filled.MuiSelect-filled {
+  padding-right: 32px;
+}
+.MuiSelect-outlined {
+  border-radius: 4px;
+}
+.MuiSelect-outlined.MuiSelect-outlined {
+  padding-right: 32px;
+}
+.MuiSelect-selectMenu {
+  height: auto;
+  overflow: hidden;
+  min-height: 1.1876em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.MuiSelect-icon {
+  top: calc(50% - 12px);
+  color: rgba(0, 0, 0, 0.54);
+  right: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.MuiSelect-icon.Mui-disabled {
+  color: rgba(0, 0, 0, 0.26);
+}
+.MuiSelect-iconOpen {
+  transform: rotate(180deg);
+}
+.MuiSelect-iconFilled {
+  right: 7px;
+}
+.MuiSelect-iconOutlined {
+  right: 7px;
+}
+.MuiSelect-nativeInput {
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+}
+</style><style data-jss="" data-meta="MuiButton">
+.MuiButton-root {
+  color: rgba(0, 0, 0, 0.87);
+  padding: 6px 16px;
+  font-size: 0.875rem;
+  min-width: 64px;
+  box-sizing: border-box;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  line-height: 1.75;
+  border-radius: 4px;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+}
+.MuiButton-root:hover {
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+.MuiButton-root.Mui-disabled {
+  color: rgba(0, 0, 0, 0.26);
+}
+@media (hover: none) {
+  .MuiButton-root:hover {
+    background-color: transparent;
+  }
+}
+.MuiButton-root:hover.Mui-disabled {
+  background-color: transparent;
+}
+.MuiButton-label {
+  width: 100%;
+  display: inherit;
+  align-items: inherit;
+  justify-content: inherit;
+}
+.MuiButton-text {
+  padding: 6px 8px;
+}
+.MuiButton-textPrimary {
+  color: #3f51b5;
+}
+.MuiButton-textPrimary:hover {
+  background-color: rgba(63, 81, 181, 0.04);
+}
+@media (hover: none) {
+  .MuiButton-textPrimary:hover {
+    background-color: transparent;
+  }
+}
+.MuiButton-textSecondary {
+  color: #f50057;
+}
+.MuiButton-textSecondary:hover {
+  background-color: rgba(245, 0, 87, 0.04);
+}
+@media (hover: none) {
+  .MuiButton-textSecondary:hover {
+    background-color: transparent;
+  }
+}
+.MuiButton-outlined {
+  border: 1px solid rgba(0, 0, 0, 0.23);
+  padding: 5px 15px;
+}
+.MuiButton-outlined.Mui-disabled {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+.MuiButton-outlinedPrimary {
+  color: #3f51b5;
+  border: 1px solid rgba(63, 81, 181, 0.5);
+}
+.MuiButton-outlinedPrimary:hover {
+  border: 1px solid #3f51b5;
+  background-color: rgba(63, 81, 181, 0.04);
+}
+@media (hover: none) {
+  .MuiButton-outlinedPrimary:hover {
+    background-color: transparent;
+  }
+}
+.MuiButton-outlinedSecondary {
+  color: #f50057;
+  border: 1px solid rgba(245, 0, 87, 0.5);
+}
+.MuiButton-outlinedSecondary:hover {
+  border: 1px solid #f50057;
+  background-color: rgba(245, 0, 87, 0.04);
+}
+.MuiButton-outlinedSecondary.Mui-disabled {
+  border: 1px solid rgba(0, 0, 0, 0.26);
+}
+@media (hover: none) {
+  .MuiButton-outlinedSecondary:hover {
+    background-color: transparent;
+  }
+}
+.MuiButton-contained {
+  color: rgba(0, 0, 0, 0.87);
+  box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);
+  background-color: #e0e0e0;
+}
+.MuiButton-contained:hover {
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);
+  background-color: #d5d5d5;
+}
+.MuiButton-contained.Mui-focusVisible {
+  box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12);
+}
+.MuiButton-contained:active {
+  box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);
+}
+.MuiButton-contained.Mui-disabled {
+  color: rgba(0, 0, 0, 0.26);
+  box-shadow: none;
+  background-color: rgba(0, 0, 0, 0.12);
+}
+@media (hover: none) {
+  .MuiButton-contained:hover {
+    box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);
+    background-color: #e0e0e0;
+  }
+}
+.MuiButton-contained:hover.Mui-disabled {
+  background-color: rgba(0, 0, 0, 0.12);
+}
+.MuiButton-containedPrimary {
+  color: #fff;
+  background-color: #3f51b5;
+}
+.MuiButton-containedPrimary:hover {
+  background-color: #303f9f;
+}
+@media (hover: none) {
+  .MuiButton-containedPrimary:hover {
+    background-color: #3f51b5;
+  }
+}
+.MuiButton-containedSecondary {
+  color: #fff;
+  background-color: #f50057;
+}
+.MuiButton-containedSecondary:hover {
+  background-color: #c51162;
+}
+@media (hover: none) {
+  .MuiButton-containedSecondary:hover {
+    background-color: #f50057;
+  }
+}
+.MuiButton-disableElevation {
+  box-shadow: none;
+}
+.MuiButton-disableElevation:hover {
+  box-shadow: none;
+}
+.MuiButton-disableElevation.Mui-focusVisible {
+  box-shadow: none;
+}
+.MuiButton-disableElevation:active {
+  box-shadow: none;
+}
+.MuiButton-disableElevation.Mui-disabled {
+  box-shadow: none;
+}
+.MuiButton-colorInherit {
+  color: inherit;
+  border-color: currentColor;
+}
+.MuiButton-textSizeSmall {
+  padding: 4px 5px;
+  font-size: 0.8125rem;
+}
+.MuiButton-textSizeLarge {
+  padding: 8px 11px;
+  font-size: 0.9375rem;
+}
+.MuiButton-outlinedSizeSmall {
+  padding: 3px 9px;
+  font-size: 0.8125rem;
+}
+.MuiButton-outlinedSizeLarge {
+  padding: 7px 21px;
+  font-size: 0.9375rem;
+}
+.MuiButton-containedSizeSmall {
+  padding: 4px 10px;
+  font-size: 0.8125rem;
+}
+.MuiButton-containedSizeLarge {
+  padding: 8px 22px;
+  font-size: 0.9375rem;
+}
+.MuiButton-fullWidth {
+  width: 100%;
+}
+.MuiButton-startIcon {
+  display: inherit;
+  margin-left: -4px;
+  margin-right: 8px;
+}
+.MuiButton-startIcon.MuiButton-iconSizeSmall {
+  margin-left: -2px;
+}
+.MuiButton-endIcon {
+  display: inherit;
+  margin-left: 8px;
+  margin-right: -4px;
+}
+.MuiButton-endIcon.MuiButton-iconSizeSmall {
+  margin-right: -2px;
+}
+.MuiButton-iconSizeSmall > *:first-child {
+  font-size: 18px;
+}
+.MuiButton-iconSizeMedium > *:first-child {
+  font-size: 20px;
+}
+.MuiButton-iconSizeLarge > *:first-child {
+  font-size: 22px;
+}
+</style><style data-jss="" data-meta="MuiFormControl">
+.MuiFormControl-root {
+  border: 0;
+  margin: 0;
+  display: inline-flex;
+  padding: 0;
+  position: relative;
+  min-width: 0;
+  flex-direction: column;
+  vertical-align: top;
+}
+.MuiFormControl-marginNormal {
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+.MuiFormControl-marginDense {
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+.MuiFormControl-fullWidth {
+  width: 100%;
+}
+</style><style data-jss="" data-meta="MuiTextField">
+
+</style><style data-jss="" data-meta="makeStyles">
+.jss1 {
+  left: -8px;
+  position: relative;
+  margin-top: 6px;
+  flex-direction: row;
+}
+.jss2 {
+  margin: 2px;
+}
+.jss3 {
+  padding: 2px 7px;
+  font-size: 20px;
+  font-family: "Inter", sans-serif;
+  text-overflow: ellipsis;
+}
+.jss4 {
+  margin: auto 0px auto 6px;
+  padding: 0px;
+}
+.jss5 {
+  font-size: 20px;
+  visibility: hidden;
+  margin-left: 8px;
+  white-space: nowrap;
+  text-overflow: clip;
+}
+</style><style data-jss="" data-meta="MuiIconButton">
+.MuiIconButton-root {
+  flex: 0 0 auto;
+  color: rgba(0, 0, 0, 0.54);
+  padding: 12px;
+  overflow: visible;
+  font-size: 1.5rem;
+  text-align: center;
+  transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  border-radius: 50%;
+}
+.MuiIconButton-root:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+.MuiIconButton-root.Mui-disabled {
+  color: rgba(0, 0, 0, 0.26);
+  background-color: transparent;
+}
+@media (hover: none) {
+  .MuiIconButton-root:hover {
+    background-color: transparent;
+  }
+}
+.MuiIconButton-edgeStart {
+  margin-left: -12px;
+}
+.MuiIconButton-sizeSmall.MuiIconButton-edgeStart {
+  margin-left: -3px;
+}
+.MuiIconButton-edgeEnd {
+  margin-right: -12px;
+}
+.MuiIconButton-sizeSmall.MuiIconButton-edgeEnd {
+  margin-right: -3px;
+}
+.MuiIconButton-colorInherit {
+  color: inherit;
+}
+.MuiIconButton-colorPrimary {
+  color: #3f51b5;
+}
+.MuiIconButton-colorPrimary:hover {
+  background-color: rgba(63, 81, 181, 0.04);
+}
+@media (hover: none) {
+  .MuiIconButton-colorPrimary:hover {
+    background-color: transparent;
+  }
+}
+.MuiIconButton-colorSecondary {
+  color: #f50057;
+}
+.MuiIconButton-colorSecondary:hover {
+  background-color: rgba(245, 0, 87, 0.04);
+}
+@media (hover: none) {
+  .MuiIconButton-colorSecondary:hover {
+    background-color: transparent;
+  }
+}
+.MuiIconButton-sizeSmall {
+  padding: 3px;
+  font-size: 1.125rem;
+}
+.MuiIconButton-label {
+  width: 100%;
+  display: flex;
+  align-items: inherit;
+  justify-content: inherit;
+}
+</style><style data-jss="" data-meta="makeStyles">
+.jss6 {
+  padding: 5px;
+}
+</style><style data-react-tooltip="true">.__react_component_tooltip {
+  border-radius: 3px;
+  display: inline-block;
+  font-size: 13px;
+  left: -999em;
+  opacity: 0;
+  padding: 8px 21px;
+  position: fixed;
+  pointer-events: none;
+  transition: opacity 0.3s ease-out;
+  top: -999em;
+  visibility: hidden;
+  z-index: 999;
+}
+.__react_component_tooltip.allow_hover, .__react_component_tooltip.allow_click {
+  pointer-events: auto;
+}
+.__react_component_tooltip::before, .__react_component_tooltip::after {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+.__react_component_tooltip.show {
+  opacity: 0.9;
+  margin-top: 0;
+  margin-left: 0;
+  visibility: visible;
+}
+.__react_component_tooltip.place-top::before {
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  bottom: -8px;
+  left: 50%;
+  margin-left: -10px;
+}
+.__react_component_tooltip.place-bottom::before {
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  top: -8px;
+  left: 50%;
+  margin-left: -10px;
+}
+.__react_component_tooltip.place-left::before {
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  right: -8px;
+  top: 50%;
+  margin-top: -5px;
+}
+.__react_component_tooltip.place-right::before {
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  left: -8px;
+  top: 50%;
+  margin-top: -5px;
+}
+.__react_component_tooltip .multi-line {
+  display: block;
+  padding: 2px 0;
+  text-align: center;
+}</style><link id="dynamic-favicon" rel="shortcut icon" href="https://www.kaggle.com/favicon.ico"><script id="google-recaptcha-v3" src="./Breast Cancer Detection _ Kaggle_files/api.js.download"></script></head><body class="" style=""><div id="root"><div style="--mdc-theme-on-primary:#fff; --mdc-theme-on-surface:rgba(0, 0, 0, 0.87); --mdc-theme-text-primary-on-background:rgba(0, 0, 0, 0.87); --mdc-theme-text-secondary-on-background:rgba(0, 0, 0, 0.54); --mdc-theme-text-hint-on-background:rgba(0, 0, 0, 0.38); --mdc-theme-text-disabled-on-background:rgba(0, 0, 0, 0.38); --mdc-theme-text-icon-on-background:rgba(0, 0, 0, 0.38); --mdc-theme-primary:#20BEFF; --mdc-theme-error:#F58B8A; --mdc-theme-background:#F8F8F8; --mdc-theme-surface:#fff; --mdc-theme-primary-bg:#20BEFF; --mdc-theme-secondary-bg:#919294;"><div tabindex="-1" style="outline: none; height: inherit;"><div class="sc-djUGQo sc-igHpSv cHNBlV dgLDt"><div class="sc-IIEeM kQWLGf"><div class="sc-eXBvqI kcMyo"><div class="sc-iFwKgL kkmsVD"><button aria-label="menu" class="sc-jSMfEi bWdumZ undefined google-material-icons">menu</button></div><a href="https://www.kaggle.com/sujvalrai/breast-cancer-detection/edit#site-content" class="sc-fmrZth fPIrjc">Skip to<br>content</a><div class="sc-iqGgem clzILw"><a href="https://www.kaggle.com/"><img src="./Breast Cancer Detection _ Kaggle_files/site-logo.svg" alt="Kaggle" class="sc-gkJlnC esSEyq"></a></div></div></div><div class="sc-gGnURB hIvUYM"><button class="sc-jhzXDd iztXCq"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path fill-rule="evenodd" clip-rule="evenodd" d="M20 30L20 16L16 20L16 30L20 30Z" fill="#20BEFF"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M20 20L30 20L30 16L20 16L20 20Z" fill="#20BEFF"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M16 20L20 16L15.937 16L6 16L6 20L16 20Z" fill="#20BEFF"></path><rect x="20" y="16" width="4" height="10" transform="rotate(-180 20 16)" fill="#20BEFF"></rect></svg><span class="sc-ezWOiH sc-bZkfAO sc-hjQCSK fuNBHd kxbrKq cawZoO">Create</span></button><div aria-hidden="true" class="mdc-menu sc-hNKHps jcYbTn sc-bSakgD iCjPcr mdc-menu-surface" style="transform-origin: left top; left: 0px; top: 0px; max-height: 714px;"><div role="menu" class="mdc-list mdc-menu__items mdc-list"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">code</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">New Notebook</p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">table_chart</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">New Dataset</p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">emoji_events</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">New Competition</p></div></div></div></div></div><div class="sc-iuStju rttCO"><div class="sc-ddcaxn ijUHW"><div class="sc-iXxrte iVtRHC"><div class="sc-hZgfyJ gKkLoc"><div class="sc-cwpsFg fMYhIW"><div class="sc-cLFqLo ivNXjb"><i emphasis="low" sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf kqAYoQ sc-afnQL CGesW">search</i><input placeholder="Search" aria-label="Search" class="sc-iJkHyd fZfYDG" value=""></div></div></div><ul class="km-list"><li class="sc-lbxAil bibdZV"><div class="sc-iNWwEs iYaBFN sc-edUIhV dDKwOm"><a class="sc-ehmTmK hHEGzd" href="https://www.kaggle.com/"><i emphasis="low" sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf kqAYoQ sc-jmnVvD bZOpRG">explore</i><p class="sc-bBrHrO sc-ivTmOn dsQgUo DPcjy" style="padding-left: 20px;">Home</p></a></div></li><li class="sc-lbxAil bibdZV"><div class="sc-iNWwEs iYaBFN sc-edUIhV dDKwOm"><a class="sc-ehmTmK hHEGzd" href="https://www.kaggle.com/competitions"><i emphasis="low" sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf kqAYoQ sc-jmnVvD bZOpRG">emoji_events</i><p class="sc-bBrHrO sc-ivTmOn dsQgUo DPcjy" style="padding-left: 20px;">Competitions</p></a></div></li><li class="sc-lbxAil bibdZV"><div class="sc-iNWwEs iYaBFN sc-edUIhV dDKwOm"><a class="sc-ehmTmK hHEGzd" href="https://www.kaggle.com/datasets"><i emphasis="low" sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf kqAYoQ sc-jmnVvD bZOpRG">table_chart</i><p class="sc-bBrHrO sc-ivTmOn dsQgUo DPcjy" style="padding-left: 20px;">Datasets</p></a></div></li><li class="sc-lbxAil bibdZV"><div class="sc-iNWwEs ezKwHr sc-edUIhV dDKwOm"><a class="sc-ehmTmK hHEGzd" href="https://www.kaggle.com/code"><i emphasis="high" sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-jmnVvD bZOpRG">code</i><p class="sc-bBrHrO sc-ivTmOn gdFqSP DPcjy" style="padding-left: 20px;">Code</p><div class="sc-jvLaUc jNdnYH"></div></a></div></li><li class="sc-lbxAil bibdZV"><div class="sc-iNWwEs iYaBFN sc-edUIhV dDKwOm"><a class="sc-ehmTmK hHEGzd" href="https://www.kaggle.com/discussion"><i emphasis="low" sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf kqAYoQ sc-jmnVvD bZOpRG">comment</i><p class="sc-bBrHrO sc-ivTmOn dsQgUo DPcjy" style="padding-left: 20px;">Discussions</p></a></div></li><li class="sc-lbxAil bibdZV"><div class="sc-iNWwEs iYaBFN sc-edUIhV dDKwOm"><a class="sc-ehmTmK hHEGzd" href="https://www.kaggle.com/learn"><i emphasis="low" sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf kqAYoQ sc-jmnVvD bZOpRG">school</i><p class="sc-bBrHrO sc-ivTmOn dsQgUo DPcjy" style="padding-left: 20px;">Courses</p></a></div></li><li class="sc-lbxAil bibdZV"><div class="sc-iNWwEs iYaBFN sc-edUIhV dDKwOm"><a class="sc-ehmTmK hHEGzd" href="https://www.kaggle.com/sujvalrai/breast-cancer-detection/edit#"><i emphasis="low" sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf kqAYoQ sc-jmnVvD bZOpRG">expand_more</i><p class="sc-bBrHrO sc-ivTmOn dsQgUo DPcjy" style="padding-left: 20px;">More</p></a></div></li></ul></div></div><div class="sc-egNfGp gbfhXx"><div class="mdc-menu-surface--anchor"><button class="sc-kzupcl iAPhCW"><div class="sc-fxMNxQ kHtPrV"><i emphasis="high" sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-hrRaah cIXMZy">update</i><div color="#FAE041" class="sc-kLDUaK bQWEab">3</div></div><p class="sc-bBrHrO sc-ivTmOn sc-dFQEdM dsQgUo DPcjy fTOKHB">View Active Events</p></button></div></div></div></div><div data-testid="searchContainer" class="sc-bTGXEy dbduRk"><div></div><div class="sc-iBYURN cKXesC"><div></div></div></div><div id="site-content" class="sc-itUGML eSilfE"><div class="sc-DdwlG jpKEPu"></div><div data-testid="notebook-editor-render-tid" class="sc-fMSvki iJPoza"><div class="sc-dApedj dgLjYj"><div></div><div class="sc-gklEiM cTZSgq"><div class="sc-iOvVvA fsYGwL"><button aria-label="menu" class="sc-jSMfEi bWdumZ undefined google-material-icons">menu</button></div><div class="sc-dnQTCN kTGMSs"><div class="sc-eWWyYb cKdsqu"><div class="MuiFormControl-root jss1" aria-describedby="component-error-text"><div class="sc-euMKGj cLlkeL"><div class="sc-drHdxQ cqtNFG"><div class="MuiFormControl-root MuiTextField-root sc-gzcill iZhKwG jss2 MuiFormControl-fullWidth"><div class="MuiInputBase-root MuiInput-root MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl"><input aria-invalid="false" autocomplete="off" id="notebook-title-input" type="text" maxlength="50" class="MuiInputBase-input MuiInput-input jss3" value="Breast Cancer Detection"></div></div></div><div class="jss5">Breast Cancer Detection_</div></div></div><div class="sc-cTWfIk dOMdLr">Draft saved</div></div><div class="sc-hTrjEa dvYxJI"><div class="sc-gbrkvF iislXr"><button class="MuiButtonBase-root MuiButton-root MuiButton-text sc-iCRtpo jaEbxD" tabindex="0" type="button"><span class="MuiButton-label">File</span></button><button class="MuiButtonBase-root MuiButton-root MuiButton-text sc-iCRtpo jaEbxD" tabindex="0" type="button"><span class="MuiButton-label">Edit</span></button><button class="MuiButtonBase-root MuiButton-root MuiButton-text sc-iCRtpo jaEbxD" tabindex="0" type="button"><span class="MuiButton-label">View</span></button><button class="MuiButtonBase-root MuiButton-root MuiButton-text sc-iCRtpo jaEbxD" tabindex="0" type="button"><span class="MuiButton-label">Run</span></button><button class="MuiButtonBase-root MuiButton-root MuiButton-text sc-iCRtpo jaEbxD" tabindex="0" type="button"><span class="MuiButton-label">Add-ons</span></button><button class="MuiButtonBase-root MuiButton-root MuiButton-text sc-iCRtpo jaEbxD" tabindex="0" type="button"><span class="MuiButton-label">Help</span></button></div></div></div><div class="sc-cYfpLr gplTcV"><button class="sc-gUAEMC eFCtaI sc-lgfUwS lbKhcT" tabindex="0" role="button"><i color="#202124" sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">people</i><span class="sc-gXmSlM sc-cCsOjp cKhlzA piYDj">Share</span></button></div><div class="sc-cQxKEj gBmZZP"><div class="sc-dwLEzm jSvpRy" data-tip="true" data-for="tooltip_components_40ae73af-d569-480c-87ba-42e1d91f96bc" currentitem="false" style="vertical-align: top;"><button class="sc-gUAEMC cWQmIJ sc-fAukJM zKIXd" tabindex="0" role="button"><i color="#FFFFFF" sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf iXgWvr">update</i><span class="sc-gXmSlM sc-cCsOjp cKhlzA piYDj">Save Version</span></button><div class="__react_component_tooltip t71412988-9bb9-4e87-ba8f-1b1db452a7af place-bottom type-dark react-tooltip" id="tooltip_components_40ae73af-d569-480c-87ba-42e1d91f96bc" data-id="tooltip" style="left: 1202px; top: 52px;"><style aria-hidden="true">
+  	.t71412988-9bb9-4e87-ba8f-1b1db452a7af {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t71412988-9bb9-4e87-ba8f-1b1db452a7af.place-top {
+        margin-top: -10px;
+    }
+    .t71412988-9bb9-4e87-ba8f-1b1db452a7af.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t71412988-9bb9-4e87-ba8f-1b1db452a7af.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t71412988-9bb9-4e87-ba8f-1b1db452a7af.place-bottom {
+        margin-top: 10px;
+    }
+    .t71412988-9bb9-4e87-ba8f-1b1db452a7af.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t71412988-9bb9-4e87-ba8f-1b1db452a7af.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t71412988-9bb9-4e87-ba8f-1b1db452a7af.place-left {
+        margin-left: -10px;
+    }
+    .t71412988-9bb9-4e87-ba8f-1b1db452a7af.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t71412988-9bb9-4e87-ba8f-1b1db452a7af.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t71412988-9bb9-4e87-ba8f-1b1db452a7af.place-right {
+        margin-left: 10px;
+    }
+    .t71412988-9bb9-4e87-ba8f-1b1db452a7af.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t71412988-9bb9-4e87-ba8f-1b1db452a7af.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">Save a new version of your work.</div></div></div><div class="sc-dwLEzm jSvpRy" data-tip="true" data-for="tooltip_components_8bb12c2b-4bb3-41f8-af11-f2d6532a4817" currentitem="false" style="vertical-align: top;"><button class="sc-gUAEMC hfoKba sc-cDZA-dN cCfuX" tabindex="0" role="button"><span class="sc-gXmSlM sc-cCsOjp cKhlzA piYDj">3</span></button><div class="__react_component_tooltip t8501860a-4e7f-4b67-966d-e60d1358c69d place-bottom type-dark react-tooltip" id="tooltip_components_8bb12c2b-4bb3-41f8-af11-f2d6532a4817" data-id="tooltip" style="left: 1347px; top: 52px;"><style aria-hidden="true">
+  	.t8501860a-4e7f-4b67-966d-e60d1358c69d {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t8501860a-4e7f-4b67-966d-e60d1358c69d.place-top {
+        margin-top: -10px;
+    }
+    .t8501860a-4e7f-4b67-966d-e60d1358c69d.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t8501860a-4e7f-4b67-966d-e60d1358c69d.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t8501860a-4e7f-4b67-966d-e60d1358c69d.place-bottom {
+        margin-top: 10px;
+    }
+    .t8501860a-4e7f-4b67-966d-e60d1358c69d.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t8501860a-4e7f-4b67-966d-e60d1358c69d.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t8501860a-4e7f-4b67-966d-e60d1358c69d.place-left {
+        margin-left: -10px;
+    }
+    .t8501860a-4e7f-4b67-966d-e60d1358c69d.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t8501860a-4e7f-4b67-966d-e60d1358c69d.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t8501860a-4e7f-4b67-966d-e60d1358c69d.place-right {
+        margin-left: 10px;
+    }
+    .t8501860a-4e7f-4b67-966d-e60d1358c69d.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t8501860a-4e7f-4b67-966d-e60d1358c69d.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">Show versions</div></div></div></div><div class="sc-tjLFZ jKiVqn"><button aria-label="Toggle sidebar visibility" title="Toggle sidebar visibility" class="sc-jSMfEi bWdumZ undefined google-material-icons">last_page</button></div></div></div><div class="sc-hWAgXy ckfFlh"><div class="sc-fwZfOe dqqfdK"><div mode="column" class="sc-eyHTTJ gvMgMA"><div class="sc-iiNSSV cIlFMV"><div class="sc-bVFNGH gLfQtR"><div class="sc-kZPSHH lnmxkr"><div class="sc-kuYQrC cLJjqw"><button class="sc-eItTMj sc-kTmzSA jGmoFa xoebY" title="Add cell"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP">add</i></button><button class="sc-eItTMj sc-kTmzSA jGmoFa xoebY" title="Delete cell"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP">delete</i></button><div class="sc-kJPuub hllvYl"></div><button class="sc-eItTMj sc-kTmzSA jGmoFa xoebY" title="Cut cell"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP">content_cut</i></button><button class="sc-eItTMj sc-kTmzSA jGmoFa xoebY" title="Copy cell"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP">content_copy</i></button><button class="sc-eItTMj sc-kTmzSA jGmoFa xoebY" title="Paste cell"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP">content_paste</i></button><div class="sc-kJPuub hllvYl"></div><button class="sc-eItTMj sc-kTmzSA jGmoFa xoebY" title="Run current cell"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP">play_arrow</i></button><button class="sc-eItTMj sc-kTmzSA jGmoFa xoebY labeled" title="Run all"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP">fast_forward</i><div class="sc-fBwhgt blsqQK">Run All</div></button><div class="sc-kJPuub hllvYl"></div><div class="mdc-menu-surface--anchor"><button class="sc-gUAEMC lfsZqI" tabindex="0" role="button"><span class="sc-gXmSlM sc-cCsOjp cKhlzA piYDj">Markdown</span><i color="#202124" sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">arrow_drop_down</i></button></div></div><div class="sc-diYIgC ferfSv"></div><button class="sc-eItTMj sc-gMIrBl jGmoFa dgBgwi"><div class="sc-kACOFk gHgWiS"><div class="sc-eA-DzvL jJFpLa"><i color="#42E3BB" sizevalue="1.125em" title="Running" verticalalign="-0.125em" class="rmwc-icon google-material-icons sc-gKXOVf kIIDsq">circle</i><div class="sc-jStShS jHeYxf">Draft Session</div></div><div class="sc-fiMvTd hZXa-dw">(1h:16m)</div></div><div title="Disk Space Usage" class="sc-iwoqQi dyIjEL"><div class="sc-dexYeb kRIFWO">HDD</div><div class="sc-gVUVPo kqIsFQ"><div value="155648" max="20957446144" class="sc-bEeDdh BOCkS"></div></div></div><div class="sc-klmQzc goGKdw"></div><div title="CPU Usage" class="sc-iwoqQi dyIjEL"><div class="sc-dexYeb kRIFWO">CPU</div><div class="sc-gVUVPo kqIsFQ"><div value="0" max="100" class="sc-bEeDdh jgVvm"></div></div></div><div class="sc-klmQzc goGKdw"></div><div title="RAM Usage" class="sc-iwoqQi dyIjEL"><div class="sc-dexYeb kRIFWO">RAM</div><div class="sc-gVUVPo kqIsFQ"><div value="2010976256" max="17179869184" class="sc-bEeDdh gByNQi"></div></div></div></button><div class="sc-bxdjLI jzrYDm"><button class="sc-eItTMj sc-kTmzSA jGmoFa xoebY" title="Stop session"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP">power_settings_new</i></button><button class="sc-eItTMj sc-kTmzSA jGmoFa xoebY" title="Factory reset"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP">loop</i></button><button class="sc-eItTMj sc-kTmzSA jGmoFa xoebY" title="More"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP">more_vert</i></button></div></div><div class="sc-hrtsrO hUDmZL"><div class="sc-hYbzA-d jRqTjy"></div><div class="sc-nnIRd irrsvb" style="display: flex;"></div><div aria-live="assertive" aria-atomic="true" aria-hidden="true" class="sc-kOZHUs hynIoa mdc-snackbar mdc-snackbar--leading"><div class="mdc-snackbar__surface"><div role="status" aria-live="polite" class="mdc-snackbar__label"><div style="display: none;"></div></div><div class="mdc-snackbar__actions"></div></div></div></div><div class="sc-kHneYr kgjdvE sc-dTQRDE ekJEOI"><div class="sc-gOPDNC cJTIeK"><div _size="xlarge" class="rmwc-circular-progress rmwc-circular-progress--size-xlarge rmwc-circular-progress--indeterminate rmwc-circular-progress--thickerstroke"><svg class="rmwc-circular-progress__circle" viewBox="0 0 48 48"><circle class="rmwc-circular-progress__path" cx="24" cy="24" r="20"></circle></svg></div></div><div class="sc-ggpVxc hzLose"><div class="sc-cWzopr iIgekk">Creating Save &amp; Run All Version</div><div class="sc-ktxwDy gtebBo"></div></div><div class="sc-eHIRxx Ykcek"></div><div class="sc-PlqmI fCKMWw"><button aria-label="close" class="sc-jSMfEi bWdumZ sc-vmsFN kaEdSB google-material-icons">close</button><button class="sc-gUAEMC eQjrBb" tabindex="0" role="button"><span class="sc-gXmSlM sc-cCsOjp cKhlzA piYDj">Stop</span></button></div></div></div></div><div class="sc-hKdnnL kgGgDA" style="position: relative; flex-basis: 300px; display: flex; flex-direction: column;"><div direction="vertical" class="sc-liHMlC bQdSAa"><div role="separator" aria-orientation="horizontal"></div></div><div style="height: 300px;"><div class="sc-DwwCV dbRzse"><div class="sc-fLPJQD bsAYfw"><div class="sc-fsyvLD hRzqTc"><div class="sc-gKsSvo cNeNDj selected"><div class="sc-bsCzJh iYXWYw"><div class="sc-kKoOxK kjdtBa">data.csv</div><div role="button" class="sc-dhmRnH byYvsg"><i sizevalue="1.125em" verticalalign="-0.125em" class="rmwc-icon google-material-icons sc-gKXOVf ePdkh">close</i></div></div></div></div><div class="MuiInputBase-root MuiInput-root sc-rWIrQ dwRqsm"><div class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input" tabindex="0" role="button" aria-haspopup="listbox"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-kwMEKh krBkry">view_agenda_24px</i></div><input aria-hidden="true" tabindex="-1" class="MuiSelect-nativeInput" value="column"><svg class="MuiSvgIcon-root MuiSelect-icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5z"></path></svg></div></div><div class="sc-fVmPpc zFjtv"><div class="sc-fukmEy kwKGgQ"><div class="sc-jEsDcK bGEFCw"><div class="sc-kNCMYV ghPHpB"><div class="sc-fpcwso ibAfFT"><p class="sc-cxabCf sc-llJcti sc-hcJkSI sc-jTUlZf bGyNSd hMXWEN bMtLQd kipjrP"><span class="sc-kLLXSd sc-ikZpkk sc-jFdHWG jtmWnw gJVCJh eVnuuR">data.csv</span>&nbsp;<span class="sc-kLLXSd sc-ikZpkk jtmWnw gJVCJh">(125.2 KiB)</span></p><div class="sc-iLvKtB kEDDcK"><p class="sc-cxabCf sc-llJcti sc-cNQtGM sc-lGdcD bGyNSd hMXWEN cqmmQH eGIaSo">../input/breast-cancer-wisconsin-data/data.csv</p><div class="sc-fDwvOK hFhNXi"><button class="sc-gUAEMC eFCtaI" tabindex="0" role="button"><i color="#202124" sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">content_copy</i><span class="sc-gXmSlM sc-cCsOjp cKhlzA piYDj">Copy</span></button></div></div><div class="sc-lmHNfd geUeFL"><div class="sc-bdxVC cGMzrV"><p class="sc-cxabCf sc-llJcti sc-fYIOIr ieLZFa hMXWEN fWSdm">10 of 32 columns</p><i color="#5F6368" sizevalue="20px" class="rmwc-icon google-material-icons sc-gKXOVf kqAWJk">keyboard_arrow_down</i></div></div><div class="sc-dwLEzm jSvpRy" data-tip="true" data-for="tooltip_components_b7620cd6-e0c0-42fe-bf7a-1c81fa128130" currentitem="false"><i color="rgba(0,0,0,0.7)" sizevalue="24px" role="button" tabindex="0" class="rmwc-icon google-material-icons sc-gKXOVf eUqryR sc-hrzOVh kqRLbH">get_app</i><div class="__react_component_tooltip tb03c8f89-59a2-4537-8b2a-01395524b3d4 place-top type-dark" id="tooltip_components_b7620cd6-e0c0-42fe-bf7a-1c81fa128130" data-id="tooltip"><style aria-hidden="true">
+  	.tb03c8f89-59a2-4537-8b2a-01395524b3d4 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.tb03c8f89-59a2-4537-8b2a-01395524b3d4.place-top {
+        margin-top: -10px;
+    }
+    .tb03c8f89-59a2-4537-8b2a-01395524b3d4.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .tb03c8f89-59a2-4537-8b2a-01395524b3d4.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .tb03c8f89-59a2-4537-8b2a-01395524b3d4.place-bottom {
+        margin-top: 10px;
+    }
+    .tb03c8f89-59a2-4537-8b2a-01395524b3d4.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .tb03c8f89-59a2-4537-8b2a-01395524b3d4.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .tb03c8f89-59a2-4537-8b2a-01395524b3d4.place-left {
+        margin-left: -10px;
+    }
+    .tb03c8f89-59a2-4537-8b2a-01395524b3d4.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .tb03c8f89-59a2-4537-8b2a-01395524b3d4.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .tb03c8f89-59a2-4537-8b2a-01395524b3d4.place-right {
+        margin-left: 10px;
+    }
+    .tb03c8f89-59a2-4537-8b2a-01395524b3d4.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .tb03c8f89-59a2-4537-8b2a-01395524b3d4.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">Download</div></div></div></div><div class="sc-jclSIp gDuhfC"><div class="sc-ciicml bUlqxG"></div><div class="sc-kxCoLp kByHqw"><div class="sc-QmDjo vbjbQ"><div class="sc-fjOrxA gJGLLY"><div class="sc-ivmvlL sc-dmWEhm dPvnbA hknyoF"><div class="sc-jUwIko beyaTN"><i sizevalue="12px" class="rmwc-icon google-material-icons sc-gKXOVf jWAECi">vpn_key</i><span class="sc-bZnhIo sc-iTONeN sc-hdyzPZ dPnCzY jTNbzy cLOeds">id</span><i color="#5F6368" sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf kqAZRH">sort</i></div></div><div class="sc-ivmvlL sc-dmWEhm dPvnbA hknyoF"><div class="sc-jUwIko beyaTN"><i sizevalue="12px" class="rmwc-icon google-material-icons sc-gKXOVf jWAECi">text_format</i><span class="sc-bZnhIo sc-iTONeN sc-hdyzPZ dPnCzY jTNbzy cLOeds">diagnosis</span><i color="#5F6368" sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf kqAZRH">sort</i></div></div><div class="sc-ivmvlL sc-dmWEhm dPvnbA hknyoF"><div class="sc-jUwIko beyaTN"><i sizevalue="12px" class="rmwc-icon google-material-icons sc-gKXOVf jWAECi">grid_3x3</i><span class="sc-bZnhIo sc-iTONeN sc-hdyzPZ dPnCzY jTNbzy cLOeds">radius_mean</span><i color="#5F6368" sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf kqAZRH">sort</i></div></div><div class="sc-ivmvlL sc-dmWEhm dPvnbA hknyoF"><div class="sc-jUwIko beyaTN"><i sizevalue="12px" class="rmwc-icon google-material-icons sc-gKXOVf jWAECi">grid_3x3</i><span class="sc-bZnhIo sc-iTONeN sc-hdyzPZ dPnCzY jTNbzy cLOeds">texture_mean</span><i color="#5F6368" sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf kqAZRH">sort</i></div></div><div class="sc-ivmvlL sc-dmWEhm dPvnbA hknyoF"><div class="sc-jUwIko beyaTN"><i sizevalue="12px" class="rmwc-icon google-material-icons sc-gKXOVf jWAECi">grid_3x3</i><span class="sc-bZnhIo sc-iTONeN sc-hdyzPZ dPnCzY jTNbzy cLOeds">perimeter_mean</span><i color="#5F6368" sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf kqAZRH">sort</i></div></div><div class="sc-ivmvlL sc-dmWEhm dPvnbA hknyoF"><div class="sc-jUwIko beyaTN"><i sizevalue="12px" class="rmwc-icon google-material-icons sc-gKXOVf jWAECi">grid_3x3</i><span class="sc-bZnhIo sc-iTONeN sc-hdyzPZ dPnCzY jTNbzy cLOeds">area_mean</span><i color="#5F6368" sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf kqAZRH">sort</i></div></div><div class="sc-ivmvlL sc-dmWEhm dPvnbA hknyoF"><div class="sc-jUwIko beyaTN"><i sizevalue="12px" class="rmwc-icon google-material-icons sc-gKXOVf jWAECi">grid_3x3</i><span class="sc-bZnhIo sc-iTONeN sc-hdyzPZ dPnCzY jTNbzy cLOeds">smoothness_mean</span><i color="#5F6368" sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf kqAZRH">sort</i></div></div><div class="sc-ivmvlL sc-dmWEhm dPvnbA hknyoF"><div class="sc-jUwIko beyaTN"><i sizevalue="12px" class="rmwc-icon google-material-icons sc-gKXOVf jWAECi">grid_3x3</i><span class="sc-bZnhIo sc-iTONeN sc-hdyzPZ dPnCzY jTNbzy cLOeds">compactness_mean</span><i color="#5F6368" sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf kqAZRH">sort</i></div></div><div class="sc-ivmvlL sc-dmWEhm dPvnbA hknyoF"><div class="sc-jUwIko beyaTN"><i sizevalue="12px" class="rmwc-icon google-material-icons sc-gKXOVf jWAECi">grid_3x3</i><span class="sc-bZnhIo sc-iTONeN sc-hdyzPZ dPnCzY jTNbzy cLOeds">concavity_mean</span><i color="#5F6368" sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf kqAZRH">sort</i></div></div><div class="sc-ivmvlL sc-dmWEhm dPvnbA hknyoF"><div class="sc-jUwIko beyaTN"><i sizevalue="12px" class="rmwc-icon google-material-icons sc-gKXOVf jWAECi">grid_3x3</i><span class="sc-bZnhIo sc-iTONeN sc-hdyzPZ dPnCzY jTNbzy cLOeds">concave points_mean</span><i color="#5F6368" sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf kqAZRH">sort</i></div></div></div></div></div><div><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>842302</div><div>M</div><div>17.99</div><div>10.38</div><div>122.8</div><div>1001</div><div>0.1184</div><div>0.2776</div><div>0.3001</div><div>0.1471</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>842517</div><div>M</div><div>20.57</div><div>17.77</div><div>132.9</div><div>1326</div><div>0.08474</div><div>0.07864</div><div>0.0869</div><div>0.07017</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>84300903</div><div>M</div><div>19.69</div><div>21.25</div><div>130</div><div>1203</div><div>0.1096</div><div>0.1599</div><div>0.1974</div><div>0.1279</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>84348301</div><div>M</div><div>11.42</div><div>20.38</div><div>77.58</div><div>386.1</div><div>0.1425</div><div>0.2839</div><div>0.2414</div><div>0.1052</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>84358402</div><div>M</div><div>20.29</div><div>14.34</div><div>135.1</div><div>1297</div><div>0.1003</div><div>0.1328</div><div>0.198</div><div>0.1043</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>843786</div><div>M</div><div>12.45</div><div>15.7</div><div>82.57</div><div>477.1</div><div>0.1278</div><div>0.17</div><div>0.1578</div><div>0.08089</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>844359</div><div>M</div><div>18.25</div><div>19.98</div><div>119.6</div><div>1040</div><div>0.09463</div><div>0.109</div><div>0.1127</div><div>0.074</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>84458202</div><div>M</div><div>13.71</div><div>20.83</div><div>90.2</div><div>577.9</div><div>0.1189</div><div>0.1645</div><div>0.09366</div><div>0.05985</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>844981</div><div>M</div><div>13</div><div>21.82</div><div>87.5</div><div>519.8</div><div>0.1273</div><div>0.1932</div><div>0.1859</div><div>0.09353</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>84501001</div><div>M</div><div>12.46</div><div>24.04</div><div>83.97</div><div>475.9</div><div>0.1186</div><div>0.2396</div><div>0.2273</div><div>0.08543</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>845636</div><div>M</div><div>16.02</div><div>23.24</div><div>102.7</div><div>797.8</div><div>0.08206</div><div>0.06669</div><div>0.03299</div><div>0.03323</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>84610002</div><div>M</div><div>15.78</div><div>17.89</div><div>103.6</div><div>781</div><div>0.0971</div><div>0.1292</div><div>0.09954</div><div>0.06606</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>846226</div><div>M</div><div>19.17</div><div>24.8</div><div>132.4</div><div>1123</div><div>0.0974</div><div>0.2458</div><div>0.2065</div><div>0.1118</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>846381</div><div>M</div><div>15.85</div><div>23.95</div><div>103.7</div><div>782.7</div><div>0.08401</div><div>0.1002</div><div>0.09938</div><div>0.05364</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>84667401</div><div>M</div><div>13.73</div><div>22.61</div><div>93.6</div><div>578.3</div><div>0.1131</div><div>0.2293</div><div>0.2128</div><div>0.08025</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>84799002</div><div>M</div><div>14.54</div><div>27.54</div><div>96.73</div><div>658.8</div><div>0.1139</div><div>0.1595</div><div>0.1639</div><div>0.07364</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>848406</div><div>M</div><div>14.68</div><div>20.13</div><div>94.74</div><div>684.5</div><div>0.09867</div><div>0.072</div><div>0.07395</div><div>0.05259</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>84862001</div><div>M</div><div>16.13</div><div>20.68</div><div>108.1</div><div>798.8</div><div>0.117</div><div>0.2022</div><div>0.1722</div><div>0.1028</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>849014</div><div>M</div><div>19.81</div><div>22.15</div><div>130</div><div>1260</div><div>0.09831</div><div>0.1027</div><div>0.1479</div><div>0.09498</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>8510426</div><div>B</div><div>13.54</div><div>14.36</div><div>87.46</div><div>566.3</div><div>0.09779</div><div>0.08129</div><div>0.06664</div><div>0.04781</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>8510653</div><div>B</div><div>13.08</div><div>15.71</div><div>85.63</div><div>520</div><div>0.1075</div><div>0.127</div><div>0.04568</div><div>0.0311</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>8510824</div><div>B</div><div>9.504</div><div>12.44</div><div>60.34</div><div>273.9</div><div>0.1024</div><div>0.06492</div><div>0.02956</div><div>0.02076</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>8511133</div><div>M</div><div>15.34</div><div>14.26</div><div>102.5</div><div>704.4</div><div>0.1073</div><div>0.2135</div><div>0.2077</div><div>0.09756</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>851509</div><div>M</div><div>21.16</div><div>23.04</div><div>137.2</div><div>1404</div><div>0.09428</div><div>0.1022</div><div>0.1097</div><div>0.08632</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>852552</div><div>M</div><div>16.65</div><div>21.38</div><div>110</div><div>904.6</div><div>0.1121</div><div>0.1457</div><div>0.1525</div><div>0.0917</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>852631</div><div>M</div><div>17.14</div><div>16.4</div><div>116</div><div>912.7</div><div>0.1186</div><div>0.2276</div><div>0.2229</div><div>0.1401</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>852763</div><div>M</div><div>14.58</div><div>21.53</div><div>97.41</div><div>644.8</div><div>0.1054</div><div>0.1868</div><div>0.1425</div><div>0.08783</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>852781</div><div>M</div><div>18.61</div><div>20.25</div><div>122.1</div><div>1094</div><div>0.0944</div><div>0.1066</div><div>0.149</div><div>0.07731</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>852973</div><div>M</div><div>15.3</div><div>25.27</div><div>102.4</div><div>732.4</div><div>0.1082</div><div>0.1697</div><div>0.1683</div><div>0.08751</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>853201</div><div>M</div><div>17.57</div><div>15.05</div><div>115</div><div>955.1</div><div>0.09847</div><div>0.1157</div><div>0.09875</div><div>0.07953</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>853401</div><div>M</div><div>18.63</div><div>25.11</div><div>124.8</div><div>1088</div><div>0.1064</div><div>0.1887</div><div>0.2319</div><div>0.1244</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>853612</div><div>M</div><div>11.84</div><div>18.7</div><div>77.93</div><div>440.6</div><div>0.1109</div><div>0.1516</div><div>0.1218</div><div>0.05182</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>85382601</div><div>M</div><div>17.02</div><div>23.98</div><div>112.8</div><div>899.3</div><div>0.1197</div><div>0.1496</div><div>0.2417</div><div>0.1203</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>854002</div><div>M</div><div>19.27</div><div>26.47</div><div>127.9</div><div>1162</div><div>0.09401</div><div>0.1719</div><div>0.1657</div><div>0.07593</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>854039</div><div>M</div><div>16.13</div><div>17.88</div><div>107</div><div>807.2</div><div>0.104</div><div>0.1559</div><div>0.1354</div><div>0.07752</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>854253</div><div>M</div><div>16.74</div><div>21.59</div><div>110.1</div><div>869.5</div><div>0.0961</div><div>0.1336</div><div>0.1348</div><div>0.06018</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>854268</div><div>M</div><div>14.25</div><div>21.72</div><div>93.63</div><div>633</div><div>0.09823</div><div>0.1098</div><div>0.1319</div><div>0.05598</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>854941</div><div>B</div><div>13.03</div><div>18.42</div><div>82.61</div><div>523.8</div><div>0.08983</div><div>0.03766</div><div>0.02562</div><div>0.02923</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>855133</div><div>M</div><div>14.99</div><div>25.2</div><div>95.54</div><div>698.8</div><div>0.09387</div><div>0.05131</div><div>0.02398</div><div>0.02899</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>855138</div><div>M</div><div>13.48</div><div>20.82</div><div>88.4</div><div>559.2</div><div>0.1016</div><div>0.1255</div><div>0.1063</div><div>0.05439</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>855167</div><div>M</div><div>13.44</div><div>21.58</div><div>86.18</div><div>563</div><div>0.08162</div><div>0.06031</div><div>0.0311</div><div>0.02031</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>855563</div><div>M</div><div>10.95</div><div>21.35</div><div>71.9</div><div>371.1</div><div>0.1227</div><div>0.1218</div><div>0.1044</div><div>0.05669</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>855625</div><div>M</div><div>19.07</div><div>24.81</div><div>128.3</div><div>1104</div><div>0.09081</div><div>0.219</div><div>0.2107</div><div>0.09961</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>856106</div><div>M</div><div>13.28</div><div>20.28</div><div>87.32</div><div>545.2</div><div>0.1041</div><div>0.1436</div><div>0.09847</div><div>0.06158</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>85638502</div><div>M</div><div>13.17</div><div>21.81</div><div>85.42</div><div>531.5</div><div>0.09714</div><div>0.1047</div><div>0.08259</div><div>0.05252</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>857010</div><div>M</div><div>18.65</div><div>17.6</div><div>123.7</div><div>1076</div><div>0.1099</div><div>0.1686</div><div>0.1974</div><div>0.1009</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>85713702</div><div>B</div><div>8.196</div><div>16.84</div><div>51.71</div><div>201.9</div><div>0.086</div><div>0.05943</div><div>0.01588</div><div>0.005917</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>85715</div><div>M</div><div>13.17</div><div>18.66</div><div>85.98</div><div>534.6</div><div>0.1158</div><div>0.1231</div><div>0.1226</div><div>0.0734</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>857155</div><div>B</div><div>12.05</div><div>14.63</div><div>78.04</div><div>449.3</div><div>0.1031</div><div>0.09092</div><div>0.06592</div><div>0.02749</div></div></span><span class="sc-cTQhss sc-jOrMOR jMMnle dYzUGm"><div class="sc-fjOrxA sc-gFeNAA gJGLLY lfiCHQ"><div>857156</div><div>B</div><div>13.49</div><div>22.3</div><div>86.91</div><div>561</div><div>0.08752</div><div>0.07698</div><div>0.04751</div><div>0.03384</div></div></span></div></div></div></div></div></div></div></div></div></div></div><div class="sc-hGzUJM kGBtLu"><div class="sc-hKdnnL kgGgDA" style="position: relative; flex-basis: 300px; display: flex; flex-direction: row; max-height: 100%; height: 100%;"><div direction="horizontal" class="sc-liHMlC ifaNcV"><div role="separator" aria-orientation="horizontal"></div></div><div style="width: 300px;"><div id="editor-sidebar-scroll-container" class="sc-dAIixb fAWIhF"><div class="sc-gchOna kFzbUR"><div role="button" class="sc-egFLrJ gUZuQ"><div class="sc-iCxJSg eZEpQm">Data</div><div class="sc-KsaEj ijZVOV"><button class="sc-gUAEMC eFCtaI" tabindex="0" role="button"><i color="#202124" sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">add</i><span class="sc-gXmSlM sc-cCsOjp cKhlzA piYDj">Add data</span></button></div><div class="sc-fgjZeG BIzNi"><button class="MuiButtonBase-root MuiIconButton-root jss6" tabindex="0" type="button" title="Collapse Data box" style="float: right;"><span class="MuiIconButton-label"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP">keyboard_arrow_up</i></span><span class="MuiTouchRipple-root"></span></button></div></div><div class="sc-dkHWjp hkjMgW"><div class="sc-ilxaJO lhTuhQ"><div class="sc-fLgErn krgqDB sc-juEKsz knyTCo"><div class="sc-iWaeiJ sc-hNMcUi jBZJCy huHetc">Input</div><ul class="sc-iBwMkf keZKfw"><li class="sc-hphwKs cQbAnq"><div role="button" class="sc-fSUSjI sc-exVHZH eRQGgT eDvNBm"><div class="sc-hQRsPl hwnOdG"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">arrow_drop_down</i></div><div class="sc-fThYeS eTFrvz"><img src="./Breast Cancer Detection _ Kaggle_files/dataset-thumbnail.jpg" class="sc-fjqEFS eYRCWT"></div><div class="sc-gHetzH hMucZl"><div class="sc-dwLEzm jSvpRy sc-hgZZql livTNq" data-tip="true" data-for="tooltip_components_a9967b6b-e0d5-4520-9c51-a68b5f6b383a" currentitem="false"><p class="sc-cxabCf sc-llJcti sc-bjuIDw bGyNSd hMXWEN hEDOdQ">breast-cancer-wisconsin-data</p><div class="__react_component_tooltip tab09d3b9-2125-4aba-af01-66c6c429e1c9 place-left type-dark react-tooltip" id="tooltip_components_a9967b6b-e0d5-4520-9c51-a68b5f6b383a" data-id="tooltip" style="left: 957px; top: 136px;"><style aria-hidden="true">
+  	.tab09d3b9-2125-4aba-af01-66c6c429e1c9 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.tab09d3b9-2125-4aba-af01-66c6c429e1c9.place-top {
+        margin-top: -10px;
+    }
+    .tab09d3b9-2125-4aba-af01-66c6c429e1c9.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .tab09d3b9-2125-4aba-af01-66c6c429e1c9.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .tab09d3b9-2125-4aba-af01-66c6c429e1c9.place-bottom {
+        margin-top: 10px;
+    }
+    .tab09d3b9-2125-4aba-af01-66c6c429e1c9.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .tab09d3b9-2125-4aba-af01-66c6c429e1c9.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .tab09d3b9-2125-4aba-af01-66c6c429e1c9.place-left {
+        margin-left: -10px;
+    }
+    .tab09d3b9-2125-4aba-af01-66c6c429e1c9.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .tab09d3b9-2125-4aba-af01-66c6c429e1c9.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .tab09d3b9-2125-4aba-af01-66c6c429e1c9.place-right {
+        margin-left: 10px;
+    }
+    .tab09d3b9-2125-4aba-af01-66c6c429e1c9.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .tab09d3b9-2125-4aba-af01-66c6c429e1c9.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">Breast Cancer Wisconsin (Diagnostic) Data Set</div></div></div></div><div class="sc-cDRvxq wQRHj"><div class="sc-lcWXdu EGKPI"><div class="sc-bHFAgP hDwbYw"><div class="sc-dwLEzm jSvpRy" data-tip="true" data-for="tooltip_components_65c7aca2-c2ea-4654-9fe7-8df79739d91c" currentitem="false"><div role="button" class="sc-doyges fstIrC"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">content_copy</i></div><div class="__react_component_tooltip t727bba36-10ec-4403-80ef-e98d265bb725 place-top type-dark" id="tooltip_components_65c7aca2-c2ea-4654-9fe7-8df79739d91c" data-id="tooltip"><style aria-hidden="true">
+  	.t727bba36-10ec-4403-80ef-e98d265bb725 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t727bba36-10ec-4403-80ef-e98d265bb725.place-top {
+        margin-top: -10px;
+    }
+    .t727bba36-10ec-4403-80ef-e98d265bb725.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t727bba36-10ec-4403-80ef-e98d265bb725.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t727bba36-10ec-4403-80ef-e98d265bb725.place-bottom {
+        margin-top: 10px;
+    }
+    .t727bba36-10ec-4403-80ef-e98d265bb725.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t727bba36-10ec-4403-80ef-e98d265bb725.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t727bba36-10ec-4403-80ef-e98d265bb725.place-left {
+        margin-left: -10px;
+    }
+    .t727bba36-10ec-4403-80ef-e98d265bb725.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t727bba36-10ec-4403-80ef-e98d265bb725.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t727bba36-10ec-4403-80ef-e98d265bb725.place-right {
+        margin-left: 10px;
+    }
+    .t727bba36-10ec-4403-80ef-e98d265bb725.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t727bba36-10ec-4403-80ef-e98d265bb725.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">Copy file path</div></div></div><div class="sc-dwLEzm jSvpRy" data-tip="true" data-for="tooltip_components_67704b9e-8d24-4bf4-9b3d-ac8bcbf3209b" currentitem="false"><div role="button" class="sc-doyges fstIrC"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">more_vert</i></div><div class="__react_component_tooltip t26bb9932-0c24-4fad-8489-e70cac2ce84c place-top type-dark" id="tooltip_components_67704b9e-8d24-4bf4-9b3d-ac8bcbf3209b" data-id="tooltip"><style aria-hidden="true">
+  	.t26bb9932-0c24-4fad-8489-e70cac2ce84c {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t26bb9932-0c24-4fad-8489-e70cac2ce84c.place-top {
+        margin-top: -10px;
+    }
+    .t26bb9932-0c24-4fad-8489-e70cac2ce84c.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t26bb9932-0c24-4fad-8489-e70cac2ce84c.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t26bb9932-0c24-4fad-8489-e70cac2ce84c.place-bottom {
+        margin-top: 10px;
+    }
+    .t26bb9932-0c24-4fad-8489-e70cac2ce84c.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t26bb9932-0c24-4fad-8489-e70cac2ce84c.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t26bb9932-0c24-4fad-8489-e70cac2ce84c.place-left {
+        margin-left: -10px;
+    }
+    .t26bb9932-0c24-4fad-8489-e70cac2ce84c.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t26bb9932-0c24-4fad-8489-e70cac2ce84c.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t26bb9932-0c24-4fad-8489-e70cac2ce84c.place-right {
+        margin-left: 10px;
+    }
+    .t26bb9932-0c24-4fad-8489-e70cac2ce84c.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t26bb9932-0c24-4fad-8489-e70cac2ce84c.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">More actions</div></div></div></div><div class="mdc-menu-surface--anchor"><div aria-hidden="true" class="mdc-menu sc-hNKHps ipIOou mdc-menu-surface" style="transform-origin: left top; left: 0px; top: 0px; max-height: 560px;"><div role="menu" class="mdc-list mdc-menu__items mdc-list"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">open_in_new</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Open in new tab</p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">cached</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Check for updates</p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">delete</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Remove</p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">update</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Pin to version</p></div></div></div></div></div></div></div></div><ul class="sc-bHTblG ePytXO"><li class="sc-hphwKs cQbAnq"><div role="button" class="sc-fSUSjI sc-exVHZH ePVuGw lhkcKf"><div class="sc-hQRsPl dCmvVh"></div><div class="sc-fThYeS bKQfGI"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">calendar_view_week</i></div><div class="sc-gHetzH hMucZl"><div class="sc-dwLEzm jSvpRy sc-hgZZql livTNq" data-tip="true" data-for="tooltip_components_b09e4fbd-8fb8-4642-875c-d3b291373678" currentitem="false"><p class="sc-cxabCf sc-llJcti sc-bjuIDw bGyNSd hMXWEN kptXEX">data.csv</p><div class="__react_component_tooltip t6991ac44-ca95-417f-8f30-bb516edb206a place-top type-dark react-tooltip" id="tooltip_components_b09e4fbd-8fb8-4642-875c-d3b291373678" data-id="tooltip" style="left: 1253px; top: 130px;"><style aria-hidden="true">
+  	.t6991ac44-ca95-417f-8f30-bb516edb206a {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t6991ac44-ca95-417f-8f30-bb516edb206a.place-top {
+        margin-top: -10px;
+    }
+    .t6991ac44-ca95-417f-8f30-bb516edb206a.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t6991ac44-ca95-417f-8f30-bb516edb206a.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t6991ac44-ca95-417f-8f30-bb516edb206a.place-bottom {
+        margin-top: 10px;
+    }
+    .t6991ac44-ca95-417f-8f30-bb516edb206a.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t6991ac44-ca95-417f-8f30-bb516edb206a.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t6991ac44-ca95-417f-8f30-bb516edb206a.place-left {
+        margin-left: -10px;
+    }
+    .t6991ac44-ca95-417f-8f30-bb516edb206a.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t6991ac44-ca95-417f-8f30-bb516edb206a.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t6991ac44-ca95-417f-8f30-bb516edb206a.place-right {
+        margin-left: 10px;
+    }
+    .t6991ac44-ca95-417f-8f30-bb516edb206a.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t6991ac44-ca95-417f-8f30-bb516edb206a.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">data.csv (125.2 KiB)</div></div></div></div><div class="sc-cDRvxq wQRHj"><div class="sc-lcWXdu EGKPI"><div class="sc-bHFAgP hDwbYw"><div class="sc-dwLEzm jSvpRy" data-tip="true" data-for="tooltip_components_5aeb136b-6104-4cb8-b5eb-66a43d6581e6" currentitem="false"><div role="button" class="sc-doyges fstIrC"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">content_copy</i></div><div class="__react_component_tooltip tc59ac3fb-df48-42e3-9beb-5f7bdaba7dcf place-top type-dark" id="tooltip_components_5aeb136b-6104-4cb8-b5eb-66a43d6581e6" data-id="tooltip"><style aria-hidden="true">
+  	.tc59ac3fb-df48-42e3-9beb-5f7bdaba7dcf {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.tc59ac3fb-df48-42e3-9beb-5f7bdaba7dcf.place-top {
+        margin-top: -10px;
+    }
+    .tc59ac3fb-df48-42e3-9beb-5f7bdaba7dcf.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .tc59ac3fb-df48-42e3-9beb-5f7bdaba7dcf.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .tc59ac3fb-df48-42e3-9beb-5f7bdaba7dcf.place-bottom {
+        margin-top: 10px;
+    }
+    .tc59ac3fb-df48-42e3-9beb-5f7bdaba7dcf.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .tc59ac3fb-df48-42e3-9beb-5f7bdaba7dcf.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .tc59ac3fb-df48-42e3-9beb-5f7bdaba7dcf.place-left {
+        margin-left: -10px;
+    }
+    .tc59ac3fb-df48-42e3-9beb-5f7bdaba7dcf.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .tc59ac3fb-df48-42e3-9beb-5f7bdaba7dcf.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .tc59ac3fb-df48-42e3-9beb-5f7bdaba7dcf.place-right {
+        margin-left: 10px;
+    }
+    .tc59ac3fb-df48-42e3-9beb-5f7bdaba7dcf.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .tc59ac3fb-df48-42e3-9beb-5f7bdaba7dcf.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">Copy file path</div></div></div></div></div></div></div></li></ul></li></ul></div><div class="sc-fLgErn krgqDB sc-juEKsz jHNLnH"><div class="sc-iWaeiJ sc-hNMcUi jBZJCy huHetc">Output (152KB / 19.5GB)</div><ul class="sc-iBwMkf keZKfw"><li class="sc-hphwKs cQbAnq"><div role="button" class="sc-fSUSjI sc-exVHZH eRQGgT eDvNBm"><div class="sc-hQRsPl hwnOdG"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">arrow_drop_down</i></div><div class="sc-fThYeS eTFrvz"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">folder</i></div><div class="sc-gHetzH hMucZl"><div class="sc-dwLEzm jSvpRy sc-hgZZql livTNq" data-tip="true" data-for="tooltip_components_29097a3c-8ebb-41ec-a084-3c7d5cb2c5f4" currentitem="false"><p class="sc-cxabCf sc-llJcti sc-bjuIDw bGyNSd hMXWEN hEDOdQ">/kaggle/working</p><div class="__react_component_tooltip t2bf4c44f-897b-4da7-a990-66a6ec361ef8 place-top type-dark react-tooltip" id="tooltip_components_29097a3c-8ebb-41ec-a084-3c7d5cb2c5f4" data-id="tooltip" style="left: 1228px; top: 202px;"><style aria-hidden="true">
+  	.t2bf4c44f-897b-4da7-a990-66a6ec361ef8 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t2bf4c44f-897b-4da7-a990-66a6ec361ef8.place-top {
+        margin-top: -10px;
+    }
+    .t2bf4c44f-897b-4da7-a990-66a6ec361ef8.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t2bf4c44f-897b-4da7-a990-66a6ec361ef8.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t2bf4c44f-897b-4da7-a990-66a6ec361ef8.place-bottom {
+        margin-top: 10px;
+    }
+    .t2bf4c44f-897b-4da7-a990-66a6ec361ef8.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t2bf4c44f-897b-4da7-a990-66a6ec361ef8.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t2bf4c44f-897b-4da7-a990-66a6ec361ef8.place-left {
+        margin-left: -10px;
+    }
+    .t2bf4c44f-897b-4da7-a990-66a6ec361ef8.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t2bf4c44f-897b-4da7-a990-66a6ec361ef8.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t2bf4c44f-897b-4da7-a990-66a6ec361ef8.place-right {
+        margin-left: 10px;
+    }
+    .t2bf4c44f-897b-4da7-a990-66a6ec361ef8.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t2bf4c44f-897b-4da7-a990-66a6ec361ef8.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">/kaggle/working (1 directories)</div></div></div></div><div class="sc-cDRvxq wQRHj"><div class="sc-lcWXdu EGKPI"><div class="sc-bHFAgP hDwbYw"><div class="sc-dwLEzm jSvpRy" data-tip="true" data-for="tooltip_components_fc553d41-a3d6-4a42-ad12-860c227f7f83" currentitem="false"><div role="button" class="sc-doyges fstIrC"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">content_copy</i></div><div class="__react_component_tooltip t3cd0e66f-61d3-4c49-a3f3-0fd103660a4c place-left type-dark react-tooltip" id="tooltip_components_fc553d41-a3d6-4a42-ad12-860c227f7f83" data-id="tooltip" style="left: 1335px; top: 208px;"><style aria-hidden="true">
+  	.t3cd0e66f-61d3-4c49-a3f3-0fd103660a4c {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t3cd0e66f-61d3-4c49-a3f3-0fd103660a4c.place-top {
+        margin-top: -10px;
+    }
+    .t3cd0e66f-61d3-4c49-a3f3-0fd103660a4c.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t3cd0e66f-61d3-4c49-a3f3-0fd103660a4c.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t3cd0e66f-61d3-4c49-a3f3-0fd103660a4c.place-bottom {
+        margin-top: 10px;
+    }
+    .t3cd0e66f-61d3-4c49-a3f3-0fd103660a4c.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t3cd0e66f-61d3-4c49-a3f3-0fd103660a4c.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t3cd0e66f-61d3-4c49-a3f3-0fd103660a4c.place-left {
+        margin-left: -10px;
+    }
+    .t3cd0e66f-61d3-4c49-a3f3-0fd103660a4c.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t3cd0e66f-61d3-4c49-a3f3-0fd103660a4c.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t3cd0e66f-61d3-4c49-a3f3-0fd103660a4c.place-right {
+        margin-left: 10px;
+    }
+    .t3cd0e66f-61d3-4c49-a3f3-0fd103660a4c.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t3cd0e66f-61d3-4c49-a3f3-0fd103660a4c.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">Copy file path</div></div></div></div><div class="sc-dwLEzm jSvpRy" data-tip="true" data-for="tooltip_components_a3f380b0-04e1-4a1b-b428-6fdddd6e40dd" currentitem="false"><div role="button" class="sc-doyges fstIrC"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">sync</i></div><div class="__react_component_tooltip t9d2a5869-bb27-4dbb-a037-25515a4f2448 place-left type-dark react-tooltip" id="tooltip_components_a3f380b0-04e1-4a1b-b428-6fdddd6e40dd" data-id="tooltip" style="left: 1281px; top: 208px;"><style aria-hidden="true">
+  	.t9d2a5869-bb27-4dbb-a037-25515a4f2448 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t9d2a5869-bb27-4dbb-a037-25515a4f2448.place-top {
+        margin-top: -10px;
+    }
+    .t9d2a5869-bb27-4dbb-a037-25515a4f2448.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t9d2a5869-bb27-4dbb-a037-25515a4f2448.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t9d2a5869-bb27-4dbb-a037-25515a4f2448.place-bottom {
+        margin-top: 10px;
+    }
+    .t9d2a5869-bb27-4dbb-a037-25515a4f2448.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t9d2a5869-bb27-4dbb-a037-25515a4f2448.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t9d2a5869-bb27-4dbb-a037-25515a4f2448.place-left {
+        margin-left: -10px;
+    }
+    .t9d2a5869-bb27-4dbb-a037-25515a4f2448.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t9d2a5869-bb27-4dbb-a037-25515a4f2448.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t9d2a5869-bb27-4dbb-a037-25515a4f2448.place-right {
+        margin-left: 10px;
+    }
+    .t9d2a5869-bb27-4dbb-a037-25515a4f2448.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t9d2a5869-bb27-4dbb-a037-25515a4f2448.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">Refresh directory contents</div></div></div></div></div></div><ul class="sc-bHTblG ePytXO"><li class="sc-hphwKs cQbAnq"><div role="button" class="sc-fSUSjI sc-exVHZH eRQGgT lhkcKf"><div class="sc-hQRsPl hwnOdG"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">arrow_drop_down</i></div><div class="sc-fThYeS eTFrvz"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">folder</i></div><div class="sc-gHetzH hMucZl"><div class="sc-dwLEzm jSvpRy sc-hgZZql livTNq" data-tip="true" data-for="tooltip_components_9a03a853-9ec7-424d-b5eb-97dc1b5f68a4" currentitem="false"><p class="sc-cxabCf sc-llJcti sc-bjuIDw bGyNSd hMXWEN hEDOdQ">catboost_info</p><div class="__react_component_tooltip t0367088a-ddfc-4c4c-9b2a-7e27c2b6c536 place-top type-dark react-tooltip" id="tooltip_components_9a03a853-9ec7-424d-b5eb-97dc1b5f68a4" data-id="tooltip" style="left: 1222px; top: 226px;"><style aria-hidden="true">
+  	.t0367088a-ddfc-4c4c-9b2a-7e27c2b6c536 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t0367088a-ddfc-4c4c-9b2a-7e27c2b6c536.place-top {
+        margin-top: -10px;
+    }
+    .t0367088a-ddfc-4c4c-9b2a-7e27c2b6c536.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t0367088a-ddfc-4c4c-9b2a-7e27c2b6c536.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t0367088a-ddfc-4c4c-9b2a-7e27c2b6c536.place-bottom {
+        margin-top: 10px;
+    }
+    .t0367088a-ddfc-4c4c-9b2a-7e27c2b6c536.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t0367088a-ddfc-4c4c-9b2a-7e27c2b6c536.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t0367088a-ddfc-4c4c-9b2a-7e27c2b6c536.place-left {
+        margin-left: -10px;
+    }
+    .t0367088a-ddfc-4c4c-9b2a-7e27c2b6c536.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t0367088a-ddfc-4c4c-9b2a-7e27c2b6c536.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t0367088a-ddfc-4c4c-9b2a-7e27c2b6c536.place-right {
+        margin-left: 10px;
+    }
+    .t0367088a-ddfc-4c4c-9b2a-7e27c2b6c536.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t0367088a-ddfc-4c4c-9b2a-7e27c2b6c536.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">catboost_info (2 directories, 3 files)</div></div></div></div><div class="sc-cDRvxq wQRHj"><div class="sc-lcWXdu EGKPI"><div class="sc-bHFAgP hDwbYw"><div class="sc-dwLEzm jSvpRy" data-tip="true" data-for="tooltip_components_4ec3c136-3332-4be9-935b-83f0d6c5431f" currentitem="false"><div role="button" class="sc-doyges fstIrC"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">content_copy</i></div><div class="__react_component_tooltip td20f6866-1de4-4902-8605-c37d56d57f11 place-top type-dark" id="tooltip_components_4ec3c136-3332-4be9-935b-83f0d6c5431f" data-id="tooltip"><style aria-hidden="true">
+  	.td20f6866-1de4-4902-8605-c37d56d57f11 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.td20f6866-1de4-4902-8605-c37d56d57f11.place-top {
+        margin-top: -10px;
+    }
+    .td20f6866-1de4-4902-8605-c37d56d57f11.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .td20f6866-1de4-4902-8605-c37d56d57f11.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .td20f6866-1de4-4902-8605-c37d56d57f11.place-bottom {
+        margin-top: 10px;
+    }
+    .td20f6866-1de4-4902-8605-c37d56d57f11.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .td20f6866-1de4-4902-8605-c37d56d57f11.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .td20f6866-1de4-4902-8605-c37d56d57f11.place-left {
+        margin-left: -10px;
+    }
+    .td20f6866-1de4-4902-8605-c37d56d57f11.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .td20f6866-1de4-4902-8605-c37d56d57f11.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .td20f6866-1de4-4902-8605-c37d56d57f11.place-right {
+        margin-left: 10px;
+    }
+    .td20f6866-1de4-4902-8605-c37d56d57f11.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .td20f6866-1de4-4902-8605-c37d56d57f11.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">Copy file path</div></div></div></div><div class="sc-dwLEzm jSvpRy" data-tip="true" data-for="tooltip_components_075e9b91-690a-4a8c-b679-25b441dbb36f" currentitem="false"><div role="button" class="sc-doyges fstIrC"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">sync</i></div><div class="__react_component_tooltip tedb20f4e-67c9-4db1-b576-c2189810ad44 place-top type-dark" id="tooltip_components_075e9b91-690a-4a8c-b679-25b441dbb36f" data-id="tooltip"><style aria-hidden="true">
+  	.tedb20f4e-67c9-4db1-b576-c2189810ad44 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.tedb20f4e-67c9-4db1-b576-c2189810ad44.place-top {
+        margin-top: -10px;
+    }
+    .tedb20f4e-67c9-4db1-b576-c2189810ad44.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .tedb20f4e-67c9-4db1-b576-c2189810ad44.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .tedb20f4e-67c9-4db1-b576-c2189810ad44.place-bottom {
+        margin-top: 10px;
+    }
+    .tedb20f4e-67c9-4db1-b576-c2189810ad44.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .tedb20f4e-67c9-4db1-b576-c2189810ad44.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .tedb20f4e-67c9-4db1-b576-c2189810ad44.place-left {
+        margin-left: -10px;
+    }
+    .tedb20f4e-67c9-4db1-b576-c2189810ad44.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .tedb20f4e-67c9-4db1-b576-c2189810ad44.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .tedb20f4e-67c9-4db1-b576-c2189810ad44.place-right {
+        margin-left: 10px;
+    }
+    .tedb20f4e-67c9-4db1-b576-c2189810ad44.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .tedb20f4e-67c9-4db1-b576-c2189810ad44.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">Refresh directory contents</div></div></div></div></div></div><ul class="sc-bHTblG ePytXO"><li class="sc-hphwKs cQbAnq"><div role="button" class="sc-fSUSjI sc-exVHZH eRQGgT buOVGf"><div class="sc-hQRsPl hwnOdG"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">arrow_right</i></div><div class="sc-fThYeS eTFrvz"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">folder</i></div><div class="sc-gHetzH hMucZl"><div class="sc-dwLEzm jSvpRy sc-hgZZql livTNq" data-tip="true" data-for="tooltip_components_aca58b8a-54e4-4ae5-8594-550728b73968" currentitem="false"><p class="sc-cxabCf sc-llJcti sc-bjuIDw bGyNSd hMXWEN hEDOdQ">learn</p><div class="__react_component_tooltip tb41d7f18-3b47-4546-9be9-2e1ad490b4b8 place-top type-dark react-tooltip" id="tooltip_components_aca58b8a-54e4-4ae5-8594-550728b73968" data-id="tooltip" style="left: 1281px; top: 250px;"><style aria-hidden="true">
+  	.tb41d7f18-3b47-4546-9be9-2e1ad490b4b8 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.tb41d7f18-3b47-4546-9be9-2e1ad490b4b8.place-top {
+        margin-top: -10px;
+    }
+    .tb41d7f18-3b47-4546-9be9-2e1ad490b4b8.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .tb41d7f18-3b47-4546-9be9-2e1ad490b4b8.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .tb41d7f18-3b47-4546-9be9-2e1ad490b4b8.place-bottom {
+        margin-top: 10px;
+    }
+    .tb41d7f18-3b47-4546-9be9-2e1ad490b4b8.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .tb41d7f18-3b47-4546-9be9-2e1ad490b4b8.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .tb41d7f18-3b47-4546-9be9-2e1ad490b4b8.place-left {
+        margin-left: -10px;
+    }
+    .tb41d7f18-3b47-4546-9be9-2e1ad490b4b8.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .tb41d7f18-3b47-4546-9be9-2e1ad490b4b8.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .tb41d7f18-3b47-4546-9be9-2e1ad490b4b8.place-right {
+        margin-left: 10px;
+    }
+    .tb41d7f18-3b47-4546-9be9-2e1ad490b4b8.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .tb41d7f18-3b47-4546-9be9-2e1ad490b4b8.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">learn (1 files)</div></div></div></div><div class="sc-cDRvxq wQRHj"><div class="sc-lcWXdu EGKPI"><div class="sc-bHFAgP hDwbYw"><div class="sc-dwLEzm jSvpRy" data-tip="true" data-for="tooltip_components_19179bd6-f8b5-4611-a034-73f101d702d2" currentitem="false"><div role="button" class="sc-doyges fstIrC"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">content_copy</i></div><div class="__react_component_tooltip tdcdcd9b3-8695-43ec-bf45-3f10dc8d763a place-top type-dark" id="tooltip_components_19179bd6-f8b5-4611-a034-73f101d702d2" data-id="tooltip"><style aria-hidden="true">
+  	.tdcdcd9b3-8695-43ec-bf45-3f10dc8d763a {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.tdcdcd9b3-8695-43ec-bf45-3f10dc8d763a.place-top {
+        margin-top: -10px;
+    }
+    .tdcdcd9b3-8695-43ec-bf45-3f10dc8d763a.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .tdcdcd9b3-8695-43ec-bf45-3f10dc8d763a.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .tdcdcd9b3-8695-43ec-bf45-3f10dc8d763a.place-bottom {
+        margin-top: 10px;
+    }
+    .tdcdcd9b3-8695-43ec-bf45-3f10dc8d763a.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .tdcdcd9b3-8695-43ec-bf45-3f10dc8d763a.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .tdcdcd9b3-8695-43ec-bf45-3f10dc8d763a.place-left {
+        margin-left: -10px;
+    }
+    .tdcdcd9b3-8695-43ec-bf45-3f10dc8d763a.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .tdcdcd9b3-8695-43ec-bf45-3f10dc8d763a.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .tdcdcd9b3-8695-43ec-bf45-3f10dc8d763a.place-right {
+        margin-left: 10px;
+    }
+    .tdcdcd9b3-8695-43ec-bf45-3f10dc8d763a.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .tdcdcd9b3-8695-43ec-bf45-3f10dc8d763a.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">Copy file path</div></div></div></div><div class="sc-dwLEzm jSvpRy" data-tip="true" data-for="tooltip_components_6fb31d20-c345-4549-ba71-2409197ae969" currentitem="false"><div role="button" class="sc-doyges fstIrC"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">sync</i></div><div class="__react_component_tooltip t74307909-5291-4e35-b2eb-1558e66c440f place-top type-dark" id="tooltip_components_6fb31d20-c345-4549-ba71-2409197ae969" data-id="tooltip"><style aria-hidden="true">
+  	.t74307909-5291-4e35-b2eb-1558e66c440f {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t74307909-5291-4e35-b2eb-1558e66c440f.place-top {
+        margin-top: -10px;
+    }
+    .t74307909-5291-4e35-b2eb-1558e66c440f.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t74307909-5291-4e35-b2eb-1558e66c440f.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t74307909-5291-4e35-b2eb-1558e66c440f.place-bottom {
+        margin-top: 10px;
+    }
+    .t74307909-5291-4e35-b2eb-1558e66c440f.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t74307909-5291-4e35-b2eb-1558e66c440f.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t74307909-5291-4e35-b2eb-1558e66c440f.place-left {
+        margin-left: -10px;
+    }
+    .t74307909-5291-4e35-b2eb-1558e66c440f.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t74307909-5291-4e35-b2eb-1558e66c440f.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t74307909-5291-4e35-b2eb-1558e66c440f.place-right {
+        margin-left: 10px;
+    }
+    .t74307909-5291-4e35-b2eb-1558e66c440f.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t74307909-5291-4e35-b2eb-1558e66c440f.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">Refresh directory contents</div></div></div></div></div></div></li><li class="sc-hphwKs cQbAnq"><div role="button" class="sc-fSUSjI sc-exVHZH eRQGgT buOVGf"><div class="sc-hQRsPl hwnOdG"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">arrow_drop_down</i></div><div class="sc-fThYeS eTFrvz"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">folder</i></div><div class="sc-gHetzH hMucZl"><div class="sc-dwLEzm jSvpRy sc-hgZZql livTNq" data-tip="true" data-for="tooltip_components_9259f801-5e82-4011-b405-23a5b2f7b79d" currentitem="false"><p class="sc-cxabCf sc-llJcti sc-bjuIDw bGyNSd hMXWEN hEDOdQ">tmp</p><div class="__react_component_tooltip te1950ce2-954f-43fe-a306-4e3ba73a4717 place-top type-dark react-tooltip" id="tooltip_components_9259f801-5e82-4011-b405-23a5b2f7b79d" data-id="tooltip" style="left: 1260px; top: 274px;"><style aria-hidden="true">
+  	.te1950ce2-954f-43fe-a306-4e3ba73a4717 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.te1950ce2-954f-43fe-a306-4e3ba73a4717.place-top {
+        margin-top: -10px;
+    }
+    .te1950ce2-954f-43fe-a306-4e3ba73a4717.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .te1950ce2-954f-43fe-a306-4e3ba73a4717.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .te1950ce2-954f-43fe-a306-4e3ba73a4717.place-bottom {
+        margin-top: 10px;
+    }
+    .te1950ce2-954f-43fe-a306-4e3ba73a4717.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .te1950ce2-954f-43fe-a306-4e3ba73a4717.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .te1950ce2-954f-43fe-a306-4e3ba73a4717.place-left {
+        margin-left: -10px;
+    }
+    .te1950ce2-954f-43fe-a306-4e3ba73a4717.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .te1950ce2-954f-43fe-a306-4e3ba73a4717.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .te1950ce2-954f-43fe-a306-4e3ba73a4717.place-right {
+        margin-left: 10px;
+    }
+    .te1950ce2-954f-43fe-a306-4e3ba73a4717.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .te1950ce2-954f-43fe-a306-4e3ba73a4717.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">tmp</div></div></div></div><div class="sc-cDRvxq wQRHj"><div class="sc-lcWXdu EGKPI"><div class="sc-bHFAgP hDwbYw"><div class="sc-dwLEzm jSvpRy" data-tip="true" data-for="tooltip_components_35106c3a-70d7-467c-84b4-f80ba2fbf157" currentitem="false"><div role="button" class="sc-doyges fstIrC"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">content_copy</i></div><div class="__react_component_tooltip t67af2d6d-6e94-471e-bb31-1ef84ff2b8e5 place-top type-dark" id="tooltip_components_35106c3a-70d7-467c-84b4-f80ba2fbf157" data-id="tooltip"><style aria-hidden="true">
+  	.t67af2d6d-6e94-471e-bb31-1ef84ff2b8e5 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t67af2d6d-6e94-471e-bb31-1ef84ff2b8e5.place-top {
+        margin-top: -10px;
+    }
+    .t67af2d6d-6e94-471e-bb31-1ef84ff2b8e5.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t67af2d6d-6e94-471e-bb31-1ef84ff2b8e5.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t67af2d6d-6e94-471e-bb31-1ef84ff2b8e5.place-bottom {
+        margin-top: 10px;
+    }
+    .t67af2d6d-6e94-471e-bb31-1ef84ff2b8e5.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t67af2d6d-6e94-471e-bb31-1ef84ff2b8e5.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t67af2d6d-6e94-471e-bb31-1ef84ff2b8e5.place-left {
+        margin-left: -10px;
+    }
+    .t67af2d6d-6e94-471e-bb31-1ef84ff2b8e5.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t67af2d6d-6e94-471e-bb31-1ef84ff2b8e5.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t67af2d6d-6e94-471e-bb31-1ef84ff2b8e5.place-right {
+        margin-left: 10px;
+    }
+    .t67af2d6d-6e94-471e-bb31-1ef84ff2b8e5.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t67af2d6d-6e94-471e-bb31-1ef84ff2b8e5.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">Copy file path</div></div></div></div><div class="sc-dwLEzm jSvpRy" data-tip="true" data-for="tooltip_components_2cc99be8-b0b3-42e9-8fb4-20c0b06e57ab" currentitem="false"><div role="button" class="sc-doyges fstIrC"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">sync</i></div><div class="__react_component_tooltip t68d51a6e-eabd-406e-85e8-afa8fd350024 place-top type-dark" id="tooltip_components_2cc99be8-b0b3-42e9-8fb4-20c0b06e57ab" data-id="tooltip"><style aria-hidden="true">
+  	.t68d51a6e-eabd-406e-85e8-afa8fd350024 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t68d51a6e-eabd-406e-85e8-afa8fd350024.place-top {
+        margin-top: -10px;
+    }
+    .t68d51a6e-eabd-406e-85e8-afa8fd350024.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t68d51a6e-eabd-406e-85e8-afa8fd350024.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t68d51a6e-eabd-406e-85e8-afa8fd350024.place-bottom {
+        margin-top: 10px;
+    }
+    .t68d51a6e-eabd-406e-85e8-afa8fd350024.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t68d51a6e-eabd-406e-85e8-afa8fd350024.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t68d51a6e-eabd-406e-85e8-afa8fd350024.place-left {
+        margin-left: -10px;
+    }
+    .t68d51a6e-eabd-406e-85e8-afa8fd350024.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t68d51a6e-eabd-406e-85e8-afa8fd350024.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t68d51a6e-eabd-406e-85e8-afa8fd350024.place-right {
+        margin-left: 10px;
+    }
+    .t68d51a6e-eabd-406e-85e8-afa8fd350024.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t68d51a6e-eabd-406e-85e8-afa8fd350024.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">Refresh directory contents</div></div></div></div></div></div><ul class="sc-bHTblG ePytXO"></ul></li><li class="sc-hphwKs cQbAnq"><div role="button" class="sc-fSUSjI sc-exVHZH eRQGgT buOVGf"><div class="sc-hQRsPl hwnOdG"></div><div class="sc-fThYeS eTFrvz"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA"><svg x="0px" y="0px" viewBox="0 0 24 24" class="sc-lgVVsH dBUNjv" style="fill: currentcolor;"><g><rect id="bounds" width="24" height="24" style="fill: none;"></rect><path id="Shape" d="M11,7h2v2h-2V7z M11,11h2v7h-2V11z"></path><path d="M2,12v-1c0,0,0,0,0,0c1.1,0,2-0.9,2-2l0,0V4c0,0,0,0,0,0c0-1.1,0.9-2,2-2c0,0,0,0,0,0h3v2H6 c0,0,0,2,0,6c0,0,0,0,0,0h0c0,1.1-0.9,2-2,2c0,0,0,0,0,0C4,12,3.3,12,2,12z"></path><path d="M22,12v-1c0,0,0,0,0,0c-1.1,0-2-0.9-2-2l0,0V4c0,0,0,0,0,0c0-1.1-0.9-2-2-2c0,0,0,0,0,0h-3v2h3 c0,0,0,2,0,6c0,0,0,0,0,0h0c0,1.1,0.9,2,2,2c0,0,0,0,0,0C20,12,20.7,12,22,12z"></path><path d="M2,12v1c0,0,0,0,0,0c1.1,0,2,0.9,2,2l0,0v5c0,0,0,0,0,0c0,1.1,0.9,2,2,2c0,0,0,0,0,0h3v-2H6 c0,0,0-2,0-6c0,0,0,0,0,0h0c0-1.1-0.9-2-2-2c0,0,0,0,0,0C4,12,3.3,12,2,12z"></path><path d="M22,12v1c0,0,0,0,0,0c-1.1,0-2,0.9-2,2l0,0v5c0,0,0,0,0,0c0,1.1-0.9,2-2,2c0,0,0,0,0,0h-3v-2h3 c0,0,0-2,0-6c0,0,0,0,0,0h0c0-1.1,0.9-2,2-2c0,0,0,0,0,0C20,12,20.7,12,22,12z"></path></g></svg></i></div><div class="sc-gHetzH hMucZl"><div class="sc-dwLEzm jSvpRy sc-hgZZql livTNq" data-tip="true" data-for="tooltip_components_d67cd3b8-d2a8-461a-b0aa-a0cca178a160" currentitem="false"><p class="sc-cxabCf sc-llJcti sc-bjuIDw bGyNSd hMXWEN hEDOdQ">catboost_training.json</p><div class="__react_component_tooltip tde9895b3-a629-4997-8450-70139429b0cc place-top type-dark react-tooltip" id="tooltip_components_d67cd3b8-d2a8-461a-b0aa-a0cca178a160" data-id="tooltip" style="left: 1266px; top: 298px;"><style aria-hidden="true">
+  	.tde9895b3-a629-4997-8450-70139429b0cc {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.tde9895b3-a629-4997-8450-70139429b0cc.place-top {
+        margin-top: -10px;
+    }
+    .tde9895b3-a629-4997-8450-70139429b0cc.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .tde9895b3-a629-4997-8450-70139429b0cc.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .tde9895b3-a629-4997-8450-70139429b0cc.place-bottom {
+        margin-top: 10px;
+    }
+    .tde9895b3-a629-4997-8450-70139429b0cc.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .tde9895b3-a629-4997-8450-70139429b0cc.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .tde9895b3-a629-4997-8450-70139429b0cc.place-left {
+        margin-left: -10px;
+    }
+    .tde9895b3-a629-4997-8450-70139429b0cc.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .tde9895b3-a629-4997-8450-70139429b0cc.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .tde9895b3-a629-4997-8450-70139429b0cc.place-right {
+        margin-left: 10px;
+    }
+    .tde9895b3-a629-4997-8450-70139429b0cc.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .tde9895b3-a629-4997-8450-70139429b0cc.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">catboost_training.json (40.33 KiB)</div></div></div></div><div class="sc-cDRvxq wQRHj"><div class="sc-lcWXdu EGKPI"><div class="sc-bHFAgP hDwbYw"><div class="sc-dwLEzm jSvpRy" data-tip="true" data-for="tooltip_components_fffdacf1-fef6-4661-9493-96a7af1a312f" currentitem="false"><div role="button" class="sc-doyges fstIrC"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">content_copy</i></div><div class="__react_component_tooltip t006e4eee-fb02-43f5-8ef6-9f41efb27a9c place-top type-dark" id="tooltip_components_fffdacf1-fef6-4661-9493-96a7af1a312f" data-id="tooltip"><style aria-hidden="true">
+  	.t006e4eee-fb02-43f5-8ef6-9f41efb27a9c {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t006e4eee-fb02-43f5-8ef6-9f41efb27a9c.place-top {
+        margin-top: -10px;
+    }
+    .t006e4eee-fb02-43f5-8ef6-9f41efb27a9c.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t006e4eee-fb02-43f5-8ef6-9f41efb27a9c.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t006e4eee-fb02-43f5-8ef6-9f41efb27a9c.place-bottom {
+        margin-top: 10px;
+    }
+    .t006e4eee-fb02-43f5-8ef6-9f41efb27a9c.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t006e4eee-fb02-43f5-8ef6-9f41efb27a9c.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t006e4eee-fb02-43f5-8ef6-9f41efb27a9c.place-left {
+        margin-left: -10px;
+    }
+    .t006e4eee-fb02-43f5-8ef6-9f41efb27a9c.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t006e4eee-fb02-43f5-8ef6-9f41efb27a9c.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t006e4eee-fb02-43f5-8ef6-9f41efb27a9c.place-right {
+        margin-left: 10px;
+    }
+    .t006e4eee-fb02-43f5-8ef6-9f41efb27a9c.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t006e4eee-fb02-43f5-8ef6-9f41efb27a9c.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">Copy file path</div></div></div><div class="sc-dwLEzm jSvpRy" data-tip="true" data-for="tooltip_components_ac80a42f-2b3b-4ae9-b73b-03143abbad77" currentitem="false"><div role="button" class="sc-doyges fstIrC"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">more_vert</i></div><div class="__react_component_tooltip tc7500629-a433-42d3-b8fe-82fb9e4e9c48 place-top type-dark" id="tooltip_components_ac80a42f-2b3b-4ae9-b73b-03143abbad77" data-id="tooltip"><style aria-hidden="true">
+  	.tc7500629-a433-42d3-b8fe-82fb9e4e9c48 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.tc7500629-a433-42d3-b8fe-82fb9e4e9c48.place-top {
+        margin-top: -10px;
+    }
+    .tc7500629-a433-42d3-b8fe-82fb9e4e9c48.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .tc7500629-a433-42d3-b8fe-82fb9e4e9c48.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .tc7500629-a433-42d3-b8fe-82fb9e4e9c48.place-bottom {
+        margin-top: 10px;
+    }
+    .tc7500629-a433-42d3-b8fe-82fb9e4e9c48.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .tc7500629-a433-42d3-b8fe-82fb9e4e9c48.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .tc7500629-a433-42d3-b8fe-82fb9e4e9c48.place-left {
+        margin-left: -10px;
+    }
+    .tc7500629-a433-42d3-b8fe-82fb9e4e9c48.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .tc7500629-a433-42d3-b8fe-82fb9e4e9c48.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .tc7500629-a433-42d3-b8fe-82fb9e4e9c48.place-right {
+        margin-left: 10px;
+    }
+    .tc7500629-a433-42d3-b8fe-82fb9e4e9c48.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .tc7500629-a433-42d3-b8fe-82fb9e4e9c48.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">More actions</div></div></div></div><div class="mdc-menu-surface--anchor"><div aria-hidden="true" class="mdc-menu sc-hNKHps ipIOou mdc-menu-surface" style="transform-origin: left top; left: 0px; top: 0px; max-height: 392px;"><div role="menu" class="mdc-list mdc-menu__items mdc-list"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">cloud_download</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Download</p></div></div></div></div></div></div></div></div></li><li class="sc-hphwKs cQbAnq"><div role="button" class="sc-fSUSjI sc-exVHZH eRQGgT buOVGf"><div class="sc-hQRsPl hwnOdG"></div><div class="sc-fThYeS eTFrvz"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">calendar_view_week</i></div><div class="sc-gHetzH hMucZl"><div class="sc-dwLEzm jSvpRy sc-hgZZql livTNq" data-tip="true" data-for="tooltip_components_4fdbcf32-b79b-4ae0-b2bb-75769a48e84f" currentitem="false"><p class="sc-cxabCf sc-llJcti sc-bjuIDw bGyNSd hMXWEN hEDOdQ">learn_error.tsv</p><div class="__react_component_tooltip te7271394-91cc-49d8-b9b3-77dcf54dd9d9 place-top type-dark react-tooltip" id="tooltip_components_4fdbcf32-b79b-4ae0-b2bb-75769a48e84f" data-id="tooltip" style="left: 1278px; top: 322px;"><style aria-hidden="true">
+  	.te7271394-91cc-49d8-b9b3-77dcf54dd9d9 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.te7271394-91cc-49d8-b9b3-77dcf54dd9d9.place-top {
+        margin-top: -10px;
+    }
+    .te7271394-91cc-49d8-b9b3-77dcf54dd9d9.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .te7271394-91cc-49d8-b9b3-77dcf54dd9d9.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .te7271394-91cc-49d8-b9b3-77dcf54dd9d9.place-bottom {
+        margin-top: 10px;
+    }
+    .te7271394-91cc-49d8-b9b3-77dcf54dd9d9.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .te7271394-91cc-49d8-b9b3-77dcf54dd9d9.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .te7271394-91cc-49d8-b9b3-77dcf54dd9d9.place-left {
+        margin-left: -10px;
+    }
+    .te7271394-91cc-49d8-b9b3-77dcf54dd9d9.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .te7271394-91cc-49d8-b9b3-77dcf54dd9d9.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .te7271394-91cc-49d8-b9b3-77dcf54dd9d9.place-right {
+        margin-left: 10px;
+    }
+    .te7271394-91cc-49d8-b9b3-77dcf54dd9d9.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .te7271394-91cc-49d8-b9b3-77dcf54dd9d9.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">learn_error.tsv (7.15 KiB)</div></div></div></div><div class="sc-cDRvxq wQRHj"><div class="sc-lcWXdu EGKPI"><div class="sc-bHFAgP hDwbYw"><div class="sc-dwLEzm jSvpRy" data-tip="true" data-for="tooltip_components_5578c9f4-9813-45ba-bad3-01b609ee671e" currentitem="false"><div role="button" class="sc-doyges fstIrC"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">content_copy</i></div><div class="__react_component_tooltip t77d62083-df95-4e75-89cf-42312c63fb03 place-top type-dark react-tooltip" id="tooltip_components_5578c9f4-9813-45ba-bad3-01b609ee671e" data-id="tooltip" style="left: 1405px; top: 324px;"><style aria-hidden="true">
+  	.t77d62083-df95-4e75-89cf-42312c63fb03 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t77d62083-df95-4e75-89cf-42312c63fb03.place-top {
+        margin-top: -10px;
+    }
+    .t77d62083-df95-4e75-89cf-42312c63fb03.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t77d62083-df95-4e75-89cf-42312c63fb03.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t77d62083-df95-4e75-89cf-42312c63fb03.place-bottom {
+        margin-top: 10px;
+    }
+    .t77d62083-df95-4e75-89cf-42312c63fb03.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t77d62083-df95-4e75-89cf-42312c63fb03.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t77d62083-df95-4e75-89cf-42312c63fb03.place-left {
+        margin-left: -10px;
+    }
+    .t77d62083-df95-4e75-89cf-42312c63fb03.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t77d62083-df95-4e75-89cf-42312c63fb03.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t77d62083-df95-4e75-89cf-42312c63fb03.place-right {
+        margin-left: 10px;
+    }
+    .t77d62083-df95-4e75-89cf-42312c63fb03.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t77d62083-df95-4e75-89cf-42312c63fb03.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">Copy file path</div></div></div><div class="sc-dwLEzm jSvpRy" data-tip="true" data-for="tooltip_components_0bf8da86-4b84-4d67-b8db-39a9877dc8af" currentitem="false"><div role="button" class="sc-doyges fstIrC"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">more_vert</i></div><div class="__react_component_tooltip td099b0a0-bd66-486d-9ba0-a604e24e76b9 place-left type-dark react-tooltip" id="tooltip_components_0bf8da86-4b84-4d67-b8db-39a9877dc8af" data-id="tooltip" style="left: 1357px; top: 352px;"><style aria-hidden="true">
+  	.td099b0a0-bd66-486d-9ba0-a604e24e76b9 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.td099b0a0-bd66-486d-9ba0-a604e24e76b9.place-top {
+        margin-top: -10px;
+    }
+    .td099b0a0-bd66-486d-9ba0-a604e24e76b9.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .td099b0a0-bd66-486d-9ba0-a604e24e76b9.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .td099b0a0-bd66-486d-9ba0-a604e24e76b9.place-bottom {
+        margin-top: 10px;
+    }
+    .td099b0a0-bd66-486d-9ba0-a604e24e76b9.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .td099b0a0-bd66-486d-9ba0-a604e24e76b9.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .td099b0a0-bd66-486d-9ba0-a604e24e76b9.place-left {
+        margin-left: -10px;
+    }
+    .td099b0a0-bd66-486d-9ba0-a604e24e76b9.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .td099b0a0-bd66-486d-9ba0-a604e24e76b9.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .td099b0a0-bd66-486d-9ba0-a604e24e76b9.place-right {
+        margin-left: 10px;
+    }
+    .td099b0a0-bd66-486d-9ba0-a604e24e76b9.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .td099b0a0-bd66-486d-9ba0-a604e24e76b9.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">More actions</div></div></div></div><div class="mdc-menu-surface--anchor"><div aria-hidden="true" class="mdc-menu sc-hNKHps ipIOou mdc-menu-surface" style="transform-origin: right top; top: 0px; max-height: 352px; right: 0px;"><div role="menu" class="mdc-list mdc-menu__items mdc-list"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">cloud_download</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Download</p></div></div></div></div></div></div></div></div></li><li class="sc-hphwKs cQbAnq"><div role="button" class="sc-fSUSjI sc-exVHZH eRQGgT buOVGf"><div class="sc-hQRsPl hwnOdG"></div><div class="sc-fThYeS eTFrvz"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">calendar_view_week</i></div><div class="sc-gHetzH hMucZl"><div class="sc-dwLEzm jSvpRy sc-hgZZql livTNq" data-tip="true" data-for="tooltip_components_48490b80-c918-4a5a-b7c0-22d787716a8d" currentitem="false"><p class="sc-cxabCf sc-llJcti sc-bjuIDw bGyNSd hMXWEN hEDOdQ">time_left.tsv</p><div class="__react_component_tooltip t7e1b5386-f8fe-43b3-b855-120841ecb663 place-top type-dark react-tooltip" id="tooltip_components_48490b80-c918-4a5a-b7c0-22d787716a8d" data-id="tooltip" style="left: 1274px; top: 346px;"><style aria-hidden="true">
+  	.t7e1b5386-f8fe-43b3-b855-120841ecb663 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t7e1b5386-f8fe-43b3-b855-120841ecb663.place-top {
+        margin-top: -10px;
+    }
+    .t7e1b5386-f8fe-43b3-b855-120841ecb663.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t7e1b5386-f8fe-43b3-b855-120841ecb663.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t7e1b5386-f8fe-43b3-b855-120841ecb663.place-bottom {
+        margin-top: 10px;
+    }
+    .t7e1b5386-f8fe-43b3-b855-120841ecb663.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t7e1b5386-f8fe-43b3-b855-120841ecb663.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t7e1b5386-f8fe-43b3-b855-120841ecb663.place-left {
+        margin-left: -10px;
+    }
+    .t7e1b5386-f8fe-43b3-b855-120841ecb663.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t7e1b5386-f8fe-43b3-b855-120841ecb663.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t7e1b5386-f8fe-43b3-b855-120841ecb663.place-right {
+        margin-left: 10px;
+    }
+    .t7e1b5386-f8fe-43b3-b855-120841ecb663.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t7e1b5386-f8fe-43b3-b855-120841ecb663.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">time_left.tsv (4.42 KiB)</div></div></div></div><div class="sc-cDRvxq wQRHj"><div class="sc-lcWXdu EGKPI"><div class="sc-bHFAgP hDwbYw"><div class="sc-dwLEzm jSvpRy" data-tip="true" data-for="tooltip_components_79ae7ca0-784c-4f3f-aff2-41ecf86d2ddd" currentitem="false"><div role="button" class="sc-doyges fstIrC"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">content_copy</i></div><div class="__react_component_tooltip t1e4b5ef5-1c40-480f-90e4-9af4d92a1efd place-top type-dark" id="tooltip_components_79ae7ca0-784c-4f3f-aff2-41ecf86d2ddd" data-id="tooltip"><style aria-hidden="true">
+  	.t1e4b5ef5-1c40-480f-90e4-9af4d92a1efd {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t1e4b5ef5-1c40-480f-90e4-9af4d92a1efd.place-top {
+        margin-top: -10px;
+    }
+    .t1e4b5ef5-1c40-480f-90e4-9af4d92a1efd.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t1e4b5ef5-1c40-480f-90e4-9af4d92a1efd.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t1e4b5ef5-1c40-480f-90e4-9af4d92a1efd.place-bottom {
+        margin-top: 10px;
+    }
+    .t1e4b5ef5-1c40-480f-90e4-9af4d92a1efd.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t1e4b5ef5-1c40-480f-90e4-9af4d92a1efd.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t1e4b5ef5-1c40-480f-90e4-9af4d92a1efd.place-left {
+        margin-left: -10px;
+    }
+    .t1e4b5ef5-1c40-480f-90e4-9af4d92a1efd.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t1e4b5ef5-1c40-480f-90e4-9af4d92a1efd.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t1e4b5ef5-1c40-480f-90e4-9af4d92a1efd.place-right {
+        margin-left: 10px;
+    }
+    .t1e4b5ef5-1c40-480f-90e4-9af4d92a1efd.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t1e4b5ef5-1c40-480f-90e4-9af4d92a1efd.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">Copy file path</div></div></div><div class="sc-dwLEzm jSvpRy" data-tip="true" data-for="tooltip_components_030c9f63-b1e2-4b10-b464-0129d4338269" currentitem="false"><div role="button" class="sc-doyges fstIrC"><i sizevalue="18px" class="rmwc-icon google-material-icons sc-gKXOVf jWACgA">more_vert</i></div><div class="__react_component_tooltip td2eeed8e-792b-4b39-b21e-6ede54fab58a place-left type-dark react-tooltip" id="tooltip_components_030c9f63-b1e2-4b10-b464-0129d4338269" data-id="tooltip" style="left: 1357px; top: 352px;"><style aria-hidden="true">
+  	.td2eeed8e-792b-4b39-b21e-6ede54fab58a {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.td2eeed8e-792b-4b39-b21e-6ede54fab58a.place-top {
+        margin-top: -10px;
+    }
+    .td2eeed8e-792b-4b39-b21e-6ede54fab58a.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .td2eeed8e-792b-4b39-b21e-6ede54fab58a.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .td2eeed8e-792b-4b39-b21e-6ede54fab58a.place-bottom {
+        margin-top: 10px;
+    }
+    .td2eeed8e-792b-4b39-b21e-6ede54fab58a.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .td2eeed8e-792b-4b39-b21e-6ede54fab58a.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .td2eeed8e-792b-4b39-b21e-6ede54fab58a.place-left {
+        margin-left: -10px;
+    }
+    .td2eeed8e-792b-4b39-b21e-6ede54fab58a.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .td2eeed8e-792b-4b39-b21e-6ede54fab58a.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .td2eeed8e-792b-4b39-b21e-6ede54fab58a.place-right {
+        margin-left: 10px;
+    }
+    .td2eeed8e-792b-4b39-b21e-6ede54fab58a.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .td2eeed8e-792b-4b39-b21e-6ede54fab58a.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style><div class="sc-TRNrF ikcdev">More actions</div></div></div></div><div class="mdc-menu-surface--anchor"><div aria-hidden="true" class="mdc-menu sc-hNKHps ipIOou mdc-menu-surface" style="transform-origin: left top; left: 0px; top: 0px; max-height: 344px;"><div role="menu" class="mdc-list mdc-menu__items mdc-list"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">cloud_download</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Download</p></div></div></div></div></div></div></div></div></li></ul></li></ul></li></ul></div></div></div></div><div class="sc-gchOna kFzbUR"><div role="button" class="sc-egFLrJ gUZuQ"><div class="sc-iCxJSg eZEpQm">Settings</div><div class="sc-KsaEj ijZVOV"></div><div class="sc-fgjZeG BIzNi"><button class="MuiButtonBase-root MuiIconButton-root jss6" tabindex="0" type="button" title="Expand Settings box" style="float: right;"><span class="MuiIconButton-label"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP">keyboard_arrow_down</i></span><span class="MuiTouchRipple-root"></span></button></div></div></div><div class="sc-gchOna kFzbUR"><div role="button" class="sc-egFLrJ gUZuQ"><div class="sc-iCxJSg eZEpQm">Schedule a notebook run</div><div class="sc-KsaEj ijZVOV"></div><div class="sc-fgjZeG BIzNi"><button class="MuiButtonBase-root MuiIconButton-root jss6" tabindex="0" type="button" title="Expand Schedule a notebook run box" style="float: right;"><span class="MuiIconButton-label"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP">keyboard_arrow_down</i></span><span class="MuiTouchRipple-root"></span></button></div></div></div><div class="sc-gchOna kFzbUR"><div role="button" class="sc-egFLrJ gUZuQ"><div class="sc-iCxJSg eZEpQm">Code Help</div><div class="sc-KsaEj ijZVOV"></div><div class="sc-fgjZeG BIzNi"><button class="MuiButtonBase-root MuiIconButton-root jss6" tabindex="0" type="button" title="Collapse Code Help box" style="float: right;"><span class="MuiIconButton-label"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP">keyboard_arrow_up</i></span><span class="MuiTouchRipple-root"></span></button></div></div><div class="sc-dkHWjp hkjMgW"><div class="sc-jrVuhE kukGRm"><div aria-live="assertive" aria-atomic="true" aria-hidden="true" class="sc-ejRpRk hotkDR mdc-snackbar mdc-snackbar--leading"><div class="mdc-snackbar__surface"><div role="status" aria-live="polite" class="mdc-snackbar__label">Copied!<div style="display: none;"></div></div><div class="mdc-snackbar__actions"><i aria-hidden="true" role="button" tabindex="0" data-mdc-ripple-is-unbounded="true" class="rmwc-icon google-material-icons mdc-snackbar__dismiss mdc-ripple-upgraded--unbounded mdc-ripple-upgraded mdc-snackbar__dismiss mdc-icon-button" style="--mdc-ripple-fg-size:0px; --mdc-ripple-fg-scale:NaN; --mdc-ripple-left:0px; --mdc-ripple-top:0px;">close</i></div></div></div><label class="mdc-ripple-upgraded sc-hbyLVd kYCWKq sc-gPKDLW efWlEZ mdc-text-field mdc-text-field--upgraded mdc-text-field--outlined mdc-text-field--with-leading-icon" aria-labelledby="textfield-Find Code Help-label"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP mdc-text-field__icon mdc-text-field__icon--leading">search</i><span class="mdc-text-field__ripple"></span><input class="mdc-text-field__input" placeholder="Find Code Help" value=""><div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched" notch="93.75"><div class="mdc-notched-outline__leading"></div><div class="mdc-notched-outline__notch" style="width: 101.75px;"><span id="textfield-Find Code Help-label" class="mdc-floating-label mdc-floating-label--float-above" style="">Find Code Help</span></div><div class="mdc-notched-outline__trailing"></div></div></label><div class="sc-jJUdvr kRAFmj"><div>Search for examples of how to do things</div></div></div></div></div></div></div></div></div></div><div class="sc-hKdnnL kgGgDA" style="position: relative; flex-basis: 40px; display: flex; flex-direction: column;"><div direction="vertical" class="sc-liHMlC bQdSAa"><div role="separator" aria-orientation="horizontal"></div></div><div style="height: 40px;"><div class="sc-dzXpmh kDThCF"><div class="sc-feEefj eSENLf"><div class="sc-bXiZrO YNBvz">Console</div><button title="Show console" class="sc-gIQksC sc-gwrZSg ihqctF erqFjd"><i sizevalue="20px" class="rmwc-icon google-material-icons sc-gKXOVf jWAFrv">keyboard_arrow_up</i></button></div></div></div></div><span></span></div></div><div class="sc-dwVMhp iQUGDN"></div><div aria-live="assertive" aria-atomic="true" aria-hidden="true" class="sc-kOZHUs hynIoa mdc-snackbar mdc-snackbar--leading"><div class="mdc-snackbar__surface"><div role="status" aria-live="polite" class="mdc-snackbar__label"><div style="display: none;"></div></div><div class="mdc-snackbar__actions"></div></div></div></div></div></div><div id="modal-root"></div>
+<script nonce="">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-12629138-1', {
+        'optimize_id': 'GTM-52LNT9S',
+        'displayFeaturesTask': null,
+        'send_page_view': false,
+    });
+</script>
+<script nonce="" async="" src="./Breast Cancer Detection _ Kaggle_files/js(1)"></script>
+<div aria-hidden="true" class="mdc-menu sc-hNKHps ipIOou sc-cKkZIC cJsKoi mdc-menu-surface"><div role="menu" class="mdc-list mdc-menu__items mdc-list"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">settings_backup_restore</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><p class="sc-cxabCf sc-llJcti jBwIGx hMXWEN">Restart &amp; Clear Cell Outputs</p></p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">info</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><p class="sc-cxabCf sc-llJcti jBwIGx hMXWEN">View Session Metrics</p></p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">open_in_new</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><p class="sc-cxabCf sc-llJcti jBwIGx hMXWEN">Upgrade to Google Cloud AI Notebooks</p></p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">memory</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><div style="display: flex;"><span>Accelerator</span><div class="sc-cZbDLb BxXJD mdc-menu-surface--anchor"><i color="#47494D" sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf iZPjFO">arrow_right</i><div aria-hidden="true" class="mdc-menu sc-hNKHps ipIOou sc-jhRauI itEWYr sc-bLTNOh fRUCvl mdc-menu-surface" style="transform-origin: left top; left: 0px; top: 0px; max-height: 714px;"><div role="menu" class="mdc-list mdc-menu__items mdc-list"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">check</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><p class="sc-cxabCf sc-llJcti jBwIGx hMXWEN">None</p></p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><p class="sc-cxabCf sc-llJcti jBwIGx hMXWEN">GPU</p></p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><p class="sc-cxabCf sc-llJcti jBwIGx hMXWEN">TPU v3-8</p></p></div></div></div></div></div></div></p></div></div></div></div><div class="sc-cgbzlL gzzdYn sc-fWuLJ bPTiPk mdc-menu-surface" style="transform-origin: left bottom; left: 0px; bottom: 8.39996px; max-height: 705.6px;"><div role="document"><div class="sc-eBOtmg kZPgvQ"><ul class="km-list km-list--icon km-list--three-line sc-jmjsKF hKayNB"><li class="sc-lbxAil bibdZV"><div class="sc-iNWwEs iYaBFN sc-cTVAEU eOeSsp"><a class="sc-ehmTmK hHEGzd"><div class="sc-jfmDQi jFmASs"><div class="sc-eKszNL fAfAuF"><div role="button" class="sc-gvTkRN bmjGkT"><div _size="medium" class="rmwc-circular-progress rmwc-circular-progress--size-medium rmwc-circular-progress--indeterminate" style="width: 36px; height: 36px; color: rgb(32, 190, 255);"><svg class="rmwc-circular-progress__circle" viewBox="0 0 24 24"><circle class="rmwc-circular-progress__path" cx="12" cy="12" r="10"></circle></svg></div><div class="sc-jPGeSq RPZFY"><svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" color="#202124" aria-hidden="true" style="font-size: 24px;"><path d="M6 6h12v12H6z"></path></svg></div></div></div><div class="sc-gFGZVQ ecSigw"><div class="sc-iBkjds sc-fLlhyt sc-ckMVTt uVZhN izULIq fxTcSG">IMDB Dataset</div><span class="sc-jIZahH sc-himrzO sc-GVOUr kdTVzc glCpMy haExgv">Version #2 with GPU </span><span class="sc-jIZahH sc-himrzO sc-GVOUr kdTVzc glCpMy haExgv">Running: <span>5 minutes</span></span></div></div></a><div class="sc-lbOyJj duupuj"><div class="sc-lmWzxR bpihmy"><p class="sc-iIPllB sc-gicCDI OBzPi dDCeGO"><span>5 minutes</span></p><div class="mdc-menu-surface--anchor"><button aria-label="more_horiz" class="sc-jSMfEi bWdumZ undefined google-material-icons">more_horiz</button></div></div></div></div></li><li class="sc-lbxAil bibdZV"><div class="sc-iNWwEs iYaBFN sc-cTVAEU eOeSsp"><a class="sc-ehmTmK hHEGzd"><div class="sc-jfmDQi jFmASs"><div class="sc-eKszNL fAfAuF"><img src="./Breast Cancer Detection _ Kaggle_files/7350673-kg.jpg"></div><div class="sc-gFGZVQ ecSigw"><div class="sc-iBkjds sc-fLlhyt sc-ckMVTt uVZhN izULIq fxTcSG">IMDB Dataset</div><span class="sc-jIZahH sc-himrzO sc-GVOUr kdTVzc glCpMy haExgv">Interactive Session with GPU </span><span class="sc-jIZahH sc-himrzO sc-GVOUr kdTVzc glCpMy haExgv">Running: <span>14 minutes</span></span></div></div></a><div class="sc-lbOyJj duupuj"><div class="sc-lmWzxR bpihmy"><p class="sc-iIPllB sc-gicCDI OBzPi dDCeGO"><span>14 minutes</span></p><div class="mdc-menu-surface--anchor"><button aria-label="more_horiz" class="sc-jSMfEi bWdumZ undefined google-material-icons">more_horiz</button></div></div></div></div></li><li class="sc-lbxAil bibdZV"><div class="sc-iNWwEs iYaBFN sc-cTVAEU eOeSsp"><a class="sc-ehmTmK hHEGzd"><div class="sc-jfmDQi jFmASs"><div class="sc-eKszNL fAfAuF"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP" style="font-size: 24px;">open_in_new</i></div><div class="sc-gFGZVQ ecSigw"><div class="sc-iBkjds sc-fLlhyt sc-ckMVTt uVZhN izULIq fxTcSG">Breast Cancer Detection</div><span class="sc-jIZahH sc-himrzO sc-GVOUr kdTVzc glCpMy haExgv">Version #3 </span><span class="sc-jIZahH sc-himrzO sc-GVOUr kdTVzc glCpMy haExgv">Successful</span></div></div></a><div class="sc-lbOyJj duupuj"><div class="sc-lmWzxR bpihmy"><p class="sc-iIPllB sc-gicCDI OBzPi dDCeGO"><span>15 minutes</span></p><div class="mdc-menu-surface--anchor"><button aria-label="more_horiz" class="sc-jSMfEi bWdumZ undefined google-material-icons">more_horiz</button></div></div></div></div></li><li class="sc-lbxAil bibdZV"><div class="sc-iNWwEs iYaBFN sc-cTVAEU eOeSsp"><a class="sc-ehmTmK hHEGzd"><div class="sc-jfmDQi jFmASs"><div class="sc-eKszNL fAfAuF"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP" style="font-size: 24px;">open_in_new</i></div><div class="sc-gFGZVQ ecSigw"><div class="sc-iBkjds sc-fLlhyt sc-ckMVTt uVZhN izULIq fxTcSG">Breast Cancer Detection</div><span class="sc-jIZahH sc-himrzO sc-GVOUr kdTVzc glCpMy haExgv">Version #2 </span><span class="sc-jIZahH sc-himrzO sc-GVOUr kdTVzc glCpMy haExgv">Successful</span></div></div></a><div class="sc-lbOyJj duupuj"><div class="sc-lmWzxR bpihmy"><p class="sc-iIPllB sc-gicCDI OBzPi dDCeGO"><span>25 minutes</span></p><div class="mdc-menu-surface--anchor"><button aria-label="more_horiz" class="sc-jSMfEi bWdumZ undefined google-material-icons">more_horiz</button></div></div></div></div></li><li class="sc-lbxAil bibdZV"><div class="sc-iNWwEs iYaBFN sc-cTVAEU eOeSsp"><a class="sc-ehmTmK hHEGzd"><div class="sc-jfmDQi jFmASs"><div class="sc-eKszNL fAfAuF"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP" style="font-size: 24px;">open_in_new</i></div><div class="sc-gFGZVQ ecSigw"><div class="sc-iBkjds sc-fLlhyt sc-ckMVTt uVZhN izULIq fxTcSG">Breast Cancer Detection</div><span class="sc-jIZahH sc-himrzO sc-GVOUr kdTVzc glCpMy haExgv">Version #1 </span><span class="sc-jIZahH sc-himrzO sc-GVOUr kdTVzc glCpMy haExgv">Successful</span></div></div></a><div class="sc-lbOyJj duupuj"><div class="sc-lmWzxR bpihmy"><p class="sc-iIPllB sc-gicCDI OBzPi dDCeGO"><span>an hour</span></p><div class="mdc-menu-surface--anchor"><button aria-label="more_horiz" class="sc-jSMfEi bWdumZ undefined google-material-icons">more_horiz</button></div></div></div></div></li><li class="sc-lbxAil bibdZV"><div class="sc-iNWwEs iYaBFN sc-cTVAEU eOeSsp"><a class="sc-ehmTmK hHEGzd"><div class="sc-jfmDQi jFmASs"><div class="sc-eKszNL fAfAuF"><img src="./Breast Cancer Detection _ Kaggle_files/7350673-kg.jpg"></div><div class="sc-gFGZVQ ecSigw"><div class="sc-iBkjds sc-fLlhyt sc-ckMVTt uVZhN izULIq fxTcSG">Breast Cancer Detection</div><span class="sc-jIZahH sc-himrzO sc-GVOUr kdTVzc glCpMy haExgv">Interactive Session </span><span class="sc-jIZahH sc-himrzO sc-GVOUr kdTVzc glCpMy haExgv">Running: <span>an hour</span></span></div></div></a><div class="sc-lbOyJj duupuj"><div class="sc-lmWzxR bpihmy"><p class="sc-iIPllB sc-gicCDI OBzPi dDCeGO"><span>an hour</span></p><div class="mdc-menu-surface--anchor"><button aria-label="more_horiz" class="sc-jSMfEi bWdumZ undefined google-material-icons">more_horiz</button></div></div></div></div></li></ul><ul class="km-list"><li class="sc-lbxAil bibdZV"><div class="sc-iNWwEs iYaBFN sc-jPFzPa hlyEGE"><a class="sc-ehmTmK hHEGzd"><div class="sc-jfmDQi jFmASs"><div class="sc-eKszNL fAfAuF"><div class="sc-fxMNxQ kHtPrV"><i emphasis="high" sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-hrRaah cIXMZy">update</i><div color="#FAE041" class="sc-kLDUaK bQWEab">3</div></div></div><div class="sc-iBkjds sc-fLlhyt sc-ckMVTt uVZhN izULIq fxTcSG"><p class="sc-cxabCf sc-llJcti ieLZFa hMXWEN">3 Active Events</p></div></div></a><div class="sc-lbOyJj duupuj"><i emphasis="high" sizevalue="24px" role="button" tabindex="0" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP">expand_more</i></div></div></li></ul></div></div></div><div aria-hidden="true" class="mdc-menu sc-hNKHps ipIOou sc-bqmxef gqeTDR mdc-menu-surface"><div role="menu" class="mdc-list mdc-menu__items mdc-list"><a href="https://www.kaggle.com/s/28679682/edit" target="_blank" class="sc-duzrYq jtgvgB"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">edit</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Edit</p></div></div></a><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">stop</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Stop Session</p></div></div></div></div><div aria-hidden="true" class="mdc-menu sc-hNKHps ipIOou sc-bqmxef gqeTDR mdc-menu-surface"><div role="menu" class="mdc-list mdc-menu__items mdc-list"><a href="https://www.kaggle.com/s/28679682/edit" target="_blank" class="sc-duzrYq jtgvgB"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">edit</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Edit</p></div></div></a><a href="https://www.kaggle.com/sv/100666947" target="_blank" class="sc-duzrYq jtgvgB"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">open_in_new</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Open in Viewer</p></div></div></a><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">clear</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Dismiss</p></div></div></div></div><div aria-hidden="true" class="mdc-menu sc-hNKHps ipIOou sc-bqmxef gqeTDR mdc-menu-surface"><div role="menu" class="mdc-list mdc-menu__items mdc-list"><a href="https://www.kaggle.com/s/28679682/edit" target="_blank" class="sc-duzrYq jtgvgB"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">edit</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Edit</p></div></div></a><a href="https://www.kaggle.com/sv/100667828" target="_blank" class="sc-duzrYq jtgvgB"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">open_in_new</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Open in Viewer</p></div></div></a><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">clear</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Dismiss</p></div></div></div></div><div aria-hidden="true" class="mdc-menu sc-hNKHps ipIOou sc-bqmxef gqeTDR mdc-menu-surface"><div role="menu" class="mdc-list mdc-menu__items mdc-list"><a href="https://www.kaggle.com/s/28679682/edit" target="_blank" class="sc-duzrYq jtgvgB"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">edit</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Edit</p></div></div></a><a href="https://www.kaggle.com/sv/100668314" target="_blank" class="sc-duzrYq jtgvgB"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">open_in_new</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Open in Viewer</p></div></div></a><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">clear</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Dismiss</p></div></div></div></div><div aria-hidden="true" class="mdc-menu sc-hNKHps ipIOou sc-bqmxef gqeTDR mdc-menu-surface"><div role="menu" class="mdc-list mdc-menu__items mdc-list"><a href="https://www.kaggle.com/s/27561418/edit" target="_blank" class="sc-duzrYq jtgvgB"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">edit</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Edit</p></div></div></a><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">stop</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Stop Session</p></div></div></div></div><div aria-hidden="true" class="mdc-menu sc-hNKHps ipIOou sc-bqmxef gqeTDR mdc-menu-surface"><div role="menu" class="mdc-list mdc-menu__items mdc-list"><a href="https://www.kaggle.com/s/27561418/edit" target="_blank" class="sc-duzrYq jtgvgB"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">edit</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Edit</p></div></div></a><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">stop</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Stop Session</p></div></div><a href="https://www.kaggle.com/sv/100668816" target="_blank" class="sc-duzrYq jtgvgB"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">open_in_new</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Open Logs in Viewer</p></div></div></a></div></div><div aria-hidden="true" class="mdc-menu sc-hNKHps ipIOou sc-cKkZIC cJsKoi mdc-menu-surface"><div role="menu" class="mdc-list mdc-menu__items mdc-list"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">settings_backup_restore</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><p class="sc-cxabCf sc-llJcti jBwIGx hMXWEN">Restart &amp; Clear Cell Outputs</p></p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">info</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><p class="sc-cxabCf sc-llJcti jBwIGx hMXWEN">View Session Metrics</p></p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">open_in_new</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><p class="sc-cxabCf sc-llJcti jBwIGx hMXWEN">Upgrade to Google Cloud AI Notebooks</p></p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">memory</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><div style="display: flex;"><span>Accelerator</span><div class="sc-cZbDLb BxXJD mdc-menu-surface--anchor"><i color="#47494D" sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf iZPjFO">arrow_right</i><div aria-hidden="true" class="mdc-menu sc-hNKHps ipIOou sc-jhRauI itEWYr sc-bLTNOh fRUCvl mdc-menu-surface" style="transform-origin: left top; left: 0px; top: 0px; max-height: 714px;"><div role="menu" class="mdc-list mdc-menu__items mdc-list"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">check</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><p class="sc-cxabCf sc-llJcti jBwIGx hMXWEN">None</p></p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><p class="sc-cxabCf sc-llJcti jBwIGx hMXWEN">GPU</p></p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><p class="sc-cxabCf sc-llJcti jBwIGx hMXWEN">TPU v3-8</p></p></div></div></div></div></div></div></p></div></div></div></div><div aria-hidden="true" class="mdc-menu sc-hNKHps ipIOou mdc-menu-surface"><div role="menu" class="mdc-list mdc-menu__items mdc-list"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Code</p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN">Markdown</p></div></div></div></div><div aria-hidden="true" class="mdc-menu sc-hNKHps ipIOou sc-jhRauI itEWYr sc-bLTNOh fRUCvl mdc-menu-surface" style="transform-origin: left top; left: 0px; top: 0px; max-height: 714px;"><div role="menu" class="mdc-list mdc-menu__items mdc-list"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">check</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><p class="sc-cxabCf sc-llJcti jBwIGx hMXWEN">None</p></p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><p class="sc-cxabCf sc-llJcti jBwIGx hMXWEN">GPU</p></p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><p class="sc-cxabCf sc-llJcti jBwIGx hMXWEN">TPU v3-8</p></p></div></div></div></div><div aria-hidden="true" class="mdc-menu sc-hNKHps ipIOou sc-cKkZIC cJsKoi mdc-menu-surface"><div role="menu" class="mdc-list mdc-menu__items mdc-list"><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">settings_backup_restore</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><p class="sc-cxabCf sc-llJcti jBwIGx hMXWEN">Restart &amp; Clear Cell Outputs</p></p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">info</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><p class="sc-cxabCf sc-llJcti jBwIGx hMXWEN">View Session Metrics</p></p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">open_in_new</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><p class="sc-cxabCf sc-llJcti jBwIGx hMXWEN">Upgrade to Google Cloud AI Notebooks</p></p></div></div><div role="menuitem" tabindex="0" class="sc-gITdmR jTHIvj mdc-ripple-upgraded sc-gITdmR jTHIvj mdc-list-item"><div class="sc-fIavCj DfIAO"><i sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf jWA-DLP sc-evrZIY elCeHP">memory</i><p class="sc-cxabCf sc-llJcti bGyNSd hMXWEN"><div style="display: flex;"><span>Accelerator</span><div class="sc-cZbDLb BxXJD mdc-menu-surface--anchor"><i color="#47494D" sizevalue="24px" class="rmwc-icon google-material-icons sc-gKXOVf iZPjFO">arrow_right</i></div></div></p></div></div></div></div><div><div class="grecaptcha-badge" data-style="bottomright" style="width: 256px; height: 60px; display: block; transition: right 0.3s ease 0s; position: fixed; bottom: 14px; right: -186px; box-shadow: gray 0px 0px 5px; border-radius: 2px; overflow: hidden;"><div class="grecaptcha-logo"><iframe title="reCAPTCHA" src="./Breast Cancer Detection _ Kaggle_files/anchor.html" width="256" height="60" role="presentation" name="a-hmoqk7wjutzv" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation"></iframe></div><div class="grecaptcha-error"></div><textarea id="g-recaptcha-response-100002" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div><iframe style="display: none;" src="./Breast Cancer Detection _ Kaggle_files/saved_resource.html"></iframe></div></body></html>
